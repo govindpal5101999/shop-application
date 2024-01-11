@@ -1,0 +1,55 @@
+<div class="contain">
+  <div id="table-container">
+    <div *ngIf="alert" class="alert alert-danger alert-dismissible fade show" role="alert">
+      <strong>Deleted</strong> Successfully!
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    <div class="input-group mb-3">
+      <input type="text" name="search" class="form-control" aria-label="Sizing example input"
+        aria-describedby="inputGroup-sizing-default" placeholder="search item here" [(ngModel)]="searchItem">
+  
+    </div>
+  
+    <h1>Products List</h1>
+    <p id="product-list" *ngIf="nodata">No Data To Show</p>
+    <div *ngIf="!nodata" id="scroll-div">
+      <table style="background: none;" class="table table-success">
+        <thead>
+          <tr>
+            <!-- <th scope="col">Id</th> -->
+            <th scope="col">Name</th>
+            <th scope="col">UnitPrice</th>
+            <th scope="col">Quantity</th>
+            <th scope="col">TotalAmount</th>
+            <th scope="col">Date</th>
+            <th scope="col">Image</th>
+            <th scope="col">Status</th>
+            <th scope="col">Operations</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let pro of Allproducts |filter:searchItem">
+            <!-- <td>{{pro.id}}</td> -->
+            <td>{{pro.name}}</td>
+            <td>{{pro.unitprice | currency:"INR":"symbol"}}</td>
+            <td>{{pro.quantity}}</td>
+            <td>{{pro.totalamount | currency:"INR":"symbol"}} </td>
+            <td>{{pro.date.slice(0,10)}}</td>
+            <td><img class="databaseImgs" src="{{imageUrl}}{{pro.picByte}}" alt="failed" /></td>
+            <td>{{pro.status}}</td>
+            <td> <button class="btn btn-danger" (click)="delete(pro.id)">
+                Delete
+              </button>
+              <a style="margin-left: 4px;" class="btn btn-primary" data-bs-toggle="collapse" href="#collapseExample" role="button"
+                routerLink="/productupdate/{{pro.id}}">
+                Edit
+              </a>
+  
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <button *ngIf="!nodata" class="btn btn-danger" (click)="deleteAllProducts()">Delete All</button>
+  </div>
+</div>

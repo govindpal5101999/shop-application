@@ -1,0 +1,38 @@
+.contain{
+    background: url('../../assets/images/product-list_bg.avif');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+   
+}
+
+#table-container{
+    margin-top: 30px;
+    color: white;
+}
+
+#scroll-div{
+    overflow: scroll;
+    max-height: 360px;
+    margin-bottom: 10px;
+}
+
+.databaseImgs{
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+}
+
+#product-list{
+    font-size: 30px;
+    color: black;
+    background: linear-gradient(blue, white,pink,yellow,green, red);
+    min-width: fit-content;
+    display: block;
+    margin: auto;
+    border-radius: 12px;
+    text-align: center;
+}

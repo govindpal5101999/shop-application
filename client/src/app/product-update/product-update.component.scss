@@ -1,0 +1,19 @@
+.contain{
+    background: url('../../assets/images/update_bg1.avif');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-color: rgba(0, 0, 0, 0.699);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#floating-panel {
+    background:linear-gradient(rgba(37, 36, 36, 0.815), rgba(27, 25, 25, 0.753));
+    padding: 2px 4px;
+    border-radius: 10px;
+    color: white;
+    width: 50rem;
+    overflow: hidden;
+  }

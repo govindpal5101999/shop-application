@@ -1,0 +1,128 @@
+<main class="contain">
+    <div id="myCarousel" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-indicators">
+            <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="0" class="active" aria-current="true"
+                aria-label="Slide 1"></button>
+            <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+            <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+        </div>
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+
+                <div class="container">
+                    <div class="carousel-caption text-start">
+                        <h1>Get sales revenue by choosing date</h1>
+                        <p>Sales revenue of selected date status are managed here ....</p>
+                        <p>
+                            <input type="date" class="form-control date-input" [(ngModel)]="customDate"
+                                (change)="changeDate()" required />
+                            <button [disabled]="!getDate" class="btn btn-primary" type="button" id="button-addon2"
+                                (click)="getDataByDate()">Get</button>
+
+                        </p>
+                        <p id="revenue">Sales revenue as on <b>{{customDate}}</b> is <b>₹{{total}}</b>
+                        </p>
+                        <!-- <p id="sales-error">No Data To Show</p> -->
+                        <div class="progress">
+                            <div id="dynamic" class="progress-bar progress-bar-success progress-bar-striped active"
+                                role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"
+                                style="width: 0%">
+                                <span id="current-progress"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <div class="container">
+                    <div class="carousel-caption">
+                        <h1>Get all saled products details</h1>
+                        <p>Products are managed here with there sales status....</p>
+                        <p> <button class="btn btn-primary" data-bs-toggle="collapse" href="#collapsesale" role="button"
+                                aria-expanded="false" aria-controls="collapseExample" (click)="getSaleDetails()">
+                                Sales Status
+                            </button></p>
+                        <div class="collapse" id="collapsesale">
+                            <p *ngIf="nodata">No Data To Show</p>
+                            <table *ngIf="!nodata" id="sale-table" class="table table-success table-striped">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Name</th>
+                                        <th scope="col">UnitPrice</th>
+                                        <th scope="col">Quantity</th>
+                                        <th scope="col">TotalAmount</th>
+                                        <th scope="col">Date</th>
+                                        <th scope="col">Image</th>
+                                        <th scope="col">Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let st of Salestatusdata">
+                                        <td>{{st.name}}</td>
+                                        <td>{{st.unitprice | currency:"INR":"symbol"}}</td>
+                                        <td>{{st.quantity}}</td>
+                                        <td>{{st.totalamount | currency:"INR":"symbol"}}</td>
+                                        <td>{{st.date.slice(0,10)}}</td>
+                                        <td><img class="databaseImgs" src="{{imageUrl}}{{st.picByte}}" alt="failed" /></td>
+                                        <td>{{st.status}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="carousel-item">
+
+                <div class="container">
+                    <div class="carousel-caption text-end">
+                        <h1>Get all purchased products details</h1>
+                        <p>Another side of status is 'PURCHASE' which is managed here with there purchase status... </p>
+                        <p> <button class="btn btn-primary" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#collapsepurchase" aria-expanded="true" aria-controls="collapsepurchase" (click)="getPurchaseDetails()">
+                                Purchase Status
+                            </button></p>
+                        <div class="collapse" id="collapsepurchase">
+                            <p *ngIf="nodata">No Data To Show</p>
+                            <table *ngIf="!nodata" id="purchase-table" class="table table-success table-striped">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Name</th>
+                                        <th scope="col">UnitPrice</th>
+                                        <th scope="col">Quantity</th>
+                                        <th scope="col">TotalAmount</th>
+                                        <th scope="col">Date</th>
+                                        <th scope="col">Image</th>
+                                        <th scope="col">Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let un of Purchasestatusdata">
+                                        <td>{{un.name}}</td>
+                                        <td>{{un.unitprice | currency:"INR":"symbol"}}</td>
+                                        <td>{{un.quantity}}</td>
+                                        <td>{{un.totalamount | currency:"INR":"symbol"}}</td>
+                                        <td>{{un.date.slice(0,10)}}</td>
+                                        <td><img class="databaseImgs" src="{{imageUrl}}{{un.picByte}}" alt="failed" /></td>
+                                        <td>{{un.status}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#myCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+</main>
