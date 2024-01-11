@@ -13,22 +13,22 @@ This application is developed for the management of shope items for sale and pur
 
 # Output
 Home
-![home](https://github.com/govindpal5101999/Shope-Application/assets/108825404/b738e4c0-8f82-4089-a688-a268f48ad50f)
+![home](https://github.com/govindpal5101999/shope-application/assets/108825404/b738e4c0-8f82-4089-a688-a268f48ad50f)
 
 Add Products
-![addproduct](https://github.com/govindpal5101999/Shope-Application/assets/108825404/e162cf45-7ffd-4c9c-b91a-53e6c313a05c)
+![addproduct](https://github.com/govindpal5101999/shope-application/assets/108825404/e162cf45-7ffd-4c9c-b91a-53e6c313a05c)
 
 Products List
-![productlist](https://github.com/govindpal5101999/Shope-Application/assets/108825404/b386e785-7483-4e1a-841e-316677b7afca)
+![productlist](https://github.com/govindpal5101999/shope-application/assets/108825404/b386e785-7483-4e1a-841e-316677b7afca)
 
 Update Prodcuts
-![update](https://github.com/govindpal5101999/Shope-Application/assets/108825404/4f630641-c145-4925-8219-1d6a35d82156)
+![update](https://github.com/govindpal5101999/shope-application/assets/108825404/4f630641-c145-4925-8219-1d6a35d82156)
 
 Top 5 Products List
-![topproducts](https://github.com/govindpal5101999/Shope-Application/assets/108825404/eabd42c7-c499-4aac-9218-8aab2f4e9c2c)
+![topproducts](https://github.com/govindpal5101999/shope-application/assets/108825404/eabd42c7-c499-4aac-9218-8aab2f4e9c2c)
 
 About
-![about](https://github.com/govindpal5101999/Shope-Application/assets/108825404/57b44e7a-913a-4e3b-a4b4-72ea04473a51)
+![about](https://github.com/govindpal5101999/shope-application/assets/108825404/57b44e7a-913a-4e3b-a4b4-72ea04473a51)
 
 Contact Us
-![contactus](https://github.com/govindpal5101999/Shope-Application/assets/108825404/e52c5976-8f12-4bb7-ab16-a882c3b70b91)
+![contactus](https://github.com/govindpal5101999/shope-application/assets/108825404/e52c5976-8f12-4bb7-ab16-a882c3b70b91)
