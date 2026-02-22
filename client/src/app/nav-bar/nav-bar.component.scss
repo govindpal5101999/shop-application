@@ -51,34 +51,47 @@
     color: #00bfa5;
 }
 
-/* Award icon in nav */
-.award-icon {
-    width: 20px;
-    height: 20px;
-    margin-left: 5px;
-    filter: invert(100%);
-    transition: transform 0.3s ease;
-}
-
 .award-icon:hover {
     transform: scale(1.2) rotate(10deg);
 }
 
-/* Navbar toggler customization */
+/* Ensure the navbar-toggler is visible */
 .navbar-toggler {
     border: none;
     outline: none;
+    z-index: 1050;
+    border: 2px solid black;
+    /* Set background color of the toggler */
 }
 
+/* Toggler icon customization with black lines */
 .navbar-toggler-icon {
-    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg' %3E%3Cpath stroke='rgba%28255, 255, 255, 1%29' stroke-width='2'stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22' /%3E%3C/svg%3E");
+    background-color: transparent;
+    /* Ensure background is transparent */
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='%23000000' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+    /* Black lines */
+    z-index: 1050;
+    /* Ensure it’s above other content */
+}
 
+/* Optional: Make the icon larger on mobile */
+@media (max-width: 768px) {
+    .navbar-toggler-icon {
+        width: 30px;
+        /* Increase width */
+        height: 30px;
+        /* Increase height */
+    }
 }
 
 /* Responsive adjustments */
 @media (max-width: 768px) {
     .navbar-glass {
         padding: 0.5rem 1rem;
+    }
+
+    .navbar-toggler {
+        z-index: 1050;
     }
 
     .nav-link {
