@@ -2,9 +2,9 @@
 html,
 body {
     height: 100%;
-    font-size: 100%;
     margin: 0;
-    font-family: Roboto, "Helvetica Neue", sans-serif;
+    overflow-x: hidden;
+    overflow-y: auto;
 }
 
 // @media (min-width: 640px) { body {font-size:1rem; color:black} }
@@ -62,7 +62,7 @@ body {
     position: absolute;
     bottom: -5px;
     font-size: 12px;
-    z-Index: 11;
+    z-index: 11;
     color: #000;
     text-shadow: -2px 0 #fff, 0 2px #fff, 2px 0 #fff, 0 -2px #fff
 }
@@ -79,7 +79,7 @@ body {
 .ol-scale-singlebar {
     position: relative;
     height: 10px;
-    z-Index: 9;
+    z-index: 9;
     box-sizing: border-box;
     border: 1px solid #000
 }
@@ -332,9 +332,6 @@ body {
 
 /*# sourceMappingURL=ol.css.map */
 
-* {
-    overflow-y: scroll;
-}
 
 // @media only screen and (min-width: 800px) {
 //     body {
@@ -352,7 +349,7 @@ body {
 #container {
     height: 90vh;
     width: 100vw;
-    position: fixed;
+    position: relative;
     bottom: 0px;
     overflow-y: scroll;
 }

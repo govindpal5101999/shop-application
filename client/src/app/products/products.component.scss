@@ -1,6 +1,5 @@
-
 #floating-panel {
-  background: linear-gradient(rgba(37,36,36,.815),rgba(27,25,25,.753));
+  background: linear-gradient(rgba(37, 36, 36, .815), rgba(27, 25, 25, .753));
   padding: 2px 4px;
   opacity: 0.7;
   border-radius: 10px;
@@ -13,11 +12,12 @@
   flex-direction: column;
   position: relative;
   right: 10px;
-  }
+}
 
-  .contain{
-    background: url('../../assets/images/bg.jpg');
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
+.contain {
+  background: url('../../assets/images/bg.jpg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: -webkit-fill-available;
 }
