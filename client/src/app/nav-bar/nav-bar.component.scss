@@ -1,6 +1,87 @@
-.navbar-brand img{
-    height: 55px;
-    width: 55px;
-    border-radius: 50%;
+/* Glassmorphism Navbar */
+.navbar-glass {
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(15px);
+    border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+    padding: 0.6rem 2rem;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+    z-index: 1000;
+}
+
+/* Logo */
+.navbar-logo {
+    height: 50px;
+    width: auto;
+    border-radius: 10px;
+    transition: transform 0.3s ease;
+}
+
+.navbar-logo:hover {
+    transform: scale(1.1) rotate(-3deg);
+}
+
+/* Navbar links */
+.navbar-glass .nav-link {
+    color: #fff;
+    font-weight: 500;
+    position: relative;
+    transition: all 0.3s ease;
+    margin: 0 0.5rem;
+}
+
+/* Gradient hover underline */
+.navbar-glass .nav-link::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 3px;
+    bottom: 0;
+    left: 0;
+    background: linear-gradient(45deg, #00bfa5, #00acc1);
+    border-radius: 2px;
+    transition: width 0.3s ease;
+}
+
+.navbar-glass .nav-link:hover::after {
+    width: 100%;
+}
+
+.navbar-glass .nav-link:hover {
+    color: #00bfa5;
+}
+
+/* Award icon in nav */
+.award-icon {
+    width: 20px;
+    height: 20px;
+    margin-left: 5px;
     filter: invert(100%);
+    transition: transform 0.3s ease;
+}
+
+.award-icon:hover {
+    transform: scale(1.2) rotate(10deg);
+}
+
+/* Navbar toggler customization */
+.navbar-toggler {
+    border: none;
+    outline: none;
+}
+
+.navbar-toggler-icon {
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg' %3E%3Cpath stroke='rgba%28255, 255, 255, 1%29' stroke-width='2'stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22' /%3E%3C/svg%3E");
+
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .navbar-glass {
+        padding: 0.5rem 1rem;
+    }
+
+    .nav-link {
+        margin: 0.3rem 0;
+    }
 }

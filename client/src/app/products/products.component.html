@@ -1,57 +1,60 @@
 <div class="contain">
-  <div  id="floating-panel">
-    <h2 style="text-align: center; color: aquamarine;">Add Products</h2>
-    <div class="row justify-content-center">
-      <div class="col-md-10">
-          <form [formGroup]="stationeryForm" (ngSubmit)="onSubmit()">
-            <div class="form-group">
-              <label>Product Name</label>
-              <input class="form-control"  type="text" formControlName="name" placeholder=""/>
-            </div>
-    
-            <div class="form-group">
-              <label>UnitPrice</label>
-              <input class="form-control"  type="text" formControlName="unitprice" placeholder="₹" (change)="unitPriceChange()"/>
-            </div>
-    
-            <div class="form-group">
-              <label>Quantity</label>
-              <input class="form-control" type="text" formControlName="quantity" (change)="quantityChange()" />
-            </div>
-  
-            <div class="form-group">
-              <label>ToatalAmount</label>
-              <input matinput readonly class="form-control" id="TA" type="text" formControlName="totalamount" placeholder="₹" />
-            </div>
-  
-            <div class="form-group">
-              <label>Date</label>
-              <input class="form-control" type="date" formControlName="date" required/>
-            </div>
-  
-            <div class="form-group">
-              <label>Image</label>
-              <input class="form-control" (change)=" selectFile($event)" type="file" id="imagefile" accept="image/*" formControlName="image" />
-              <img src="{{imageUrl}}" height="100px" width="100px" *ngIf="imageUrl" alt="failed">
-            </div>
-            <div class="form-group">
-              <label>Status</label><br>
-              <select id="status" formControlName="status">
-                <option *ngFor="let c of SalePurchasetatus" [ngValue]="c">{{ c }}</option>
-            </select>
-            </div>
-            &nbsp;
-            <div class="form-group">
-              <button class="btn btn-primary btn-block" type="submit">Submit</button>
-            </div>
-            &nbsp;
-          </form>
+  <div id="floating-panel">
+    <h2 class="form-title">Add Products</h2>
+    <form [formGroup]="stationeryForm" (ngSubmit)="onSubmit()" class="modern-form">
+
+      <!-- Product Name -->
+      <div class="form-group floating-label">
+        <input type="text" formControlName="name" class="form-control" placeholder=" " />
+        <label>Product Name</label>
       </div>
-    </div>
+
+      <!-- Unit Price -->
+      <div class="form-group floating-label">
+        <input type="text" formControlName="unitprice" class="form-control" placeholder=" "
+          (change)="unitPriceChange()" />
+        <label>Unit Price (₹)</label>
+      </div>
+
+      <!-- Quantity -->
+      <div class="form-group floating-label">
+        <input type="text" formControlName="quantity" class="form-control" placeholder=" "
+          (change)="quantityChange()" />
+        <label>Quantity</label>
+      </div>
+
+      <!-- Total Amount -->
+      <div class="form-group floating-label">
+        <input type="text" formControlName="totalamount" class="form-control" placeholder=" " readonly />
+        <label>Total Amount (₹)</label>
+      </div>
+
+      <!-- Date -->
+      <div class="form-group floating-label">
+        <input type="date" formControlName="date" class="form-control" placeholder=" " required />
+      </div>
+
+      <!-- Image -->
+      <div class="form-group">
+        <input type="file" id="imagefile" accept="image/*" class="form-control image-input"
+          (change)="selectFile($event)" formControlName="image" />
+        <div class="image-preview" *ngIf="imageUrl">
+          <img [src]="imageUrl" alt="failed">
+        </div>
+      </div>
+      <br>
+      <!-- Status -->
+      <div class="form-group floating-label select-wrapper">
+        <select formControlName="status" class="form-control">
+          <option *ngFor="let c of SalePurchasetatus" [ngValue]="c">{{ c }}</option>
+        </select>
+      </div>
+
+      <!-- Submit Button -->
+      <div class="form-group submit-wrapper">
+        <button type="submit" class="btn submit-btn">Submit</button>
+      </div>
+
+    </form>
   </div>
-
 </div>
-
-
-
-

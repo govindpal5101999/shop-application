@@ -1,51 +1,94 @@
-body {
-  background-image: linear-gradient(180deg, #eee, #fff 100px, #fff);
+/* Section Background */
+.top-products-section {
+  background: linear-gradient(135deg, #e0f7f1, #a3d8c0);
+  padding: 2rem 1rem;
 }
 
-.container {
-  max-width: 960px;
+/* Heading */
+.top-heading {
+  color: #176b5c;
+  font-size: 2rem;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  margin-bottom: 1.5rem;
 }
 
-.pricing-header {
-  max-width: 700px;
-}
-
-#top-table {
-  width: 100%;
-  margin-left: 20px;
-}
-
-.date-input {
-  width: 200px;
-  display: inline;
-  border-radius: 4px;
-}
-
-.topImg {
-  height: 100px;
-  width: 100px;
-  border-radius: 50%;
-  border: 1px solid black;
-}
-
-.contain {
-  background: url('../../assets/images/bg6.avif') no-repeat center center;
-  background-size: cover;
-  min-height: 100vh;
-  /* Ensures the background covers the entire page */
+/* Product Cards */
+.top-card {
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(15px);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border-radius: 20px;
   position: relative;
+  overflow: hidden;
 }
 
-#top-para {
-  font-size: 30px;
-  color: black;
-  background: linear-gradient(red, purple, pink, white, green, orange);
-  min-width: fit-content;
-  display: block;
-  margin: auto;
+.top-card:hover {
+  transform: translateY(-8px) scale(1.03);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
+}
+
+/* Card Header */
+.top-card-header {
+  background: linear-gradient(45deg, #00bfa5, #00acc1);
+  color: #fff;
+  border-bottom: none;
+  // border-radius: 20px 20px 0 0;
+}
+
+/* Product Image */
+.topImg {
   border-radius: 12px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.scroll-stop {
-  overflow-x: hidden !important;
+.topImg:hover {
+  transform: scale(1.05) rotate(-2deg);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+}
+
+/* Mirror / Water Reflection */
+.mirror {
+  position: relative;
+  height: 80px;
+  overflow: hidden;
+  margin-top: -20px;
+}
+
+.mirror img {
+  transform: scaleY(-1);
+  opacity: 0.25;
+  filter: blur(1px);
+  animation: ripple 3s ease-in-out infinite alternate;
+}
+
+@keyframes ripple {
+  0% {
+    transform: scaleY(-1) translateY(0);
+    opacity: 0.25;
+  }
+
+  50% {
+    transform: scaleY(-1) translateY(4px);
+    opacity: 0.3;
+  }
+
+  100% {
+    transform: scaleY(-1) translateY(0);
+    opacity: 0.25;
+  }
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+  .top-card-header h4 {
+    font-size: 1.2rem;
+  }
+
+  .topImg {
+    max-height: 100px;
+  }
+
+  .mirror {
+    height: 50px;
+  }
 }

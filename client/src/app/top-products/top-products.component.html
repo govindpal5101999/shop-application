@@ -1,15 +1,16 @@
-<div class="contain">
+<div class="contain top-products-section">
 
     <!-- HEADER -->
     <header>
         <div class="pricing-header p-3 pb-md-4 mx-auto text-center">
-            <h1 class="display-4 fw-normal" style="color: rgb(176, 209, 194); font-weight: bold; font-size: 32px;">
+            <h1 class="display-4 fw-bold top-heading">
                 Top 5 Selling Products
             </h1>
 
-            <!-- Date input (for future use, no API call yet) -->
             <input type="date" class="form-control date-input mx-auto" style="max-width: 250px;"
                 [(ngModel)]="customDate" (change)="changeDate()" />
+            <button [disabled]="!getDate" class="btn btn-primary" type="button" id="button-addon2"
+                (click)="getQuantity()">Get</button>
         </div>
     </header>
 
@@ -21,10 +22,10 @@
     <!-- PRODUCTS -->
     <div class="row row-cols-1 row-cols-md-5 g-4 justify-content-center" *ngIf="!nodata">
         <div class="col" *ngFor="let top of topData">
-            <div class="card mb-4 rounded-3 shadow-sm h-100 text-center">
+            <div class="card top-card mb-4 rounded-3 shadow-sm h-100 text-center">
 
-                <div class="card-header py-3">
-                    <h4 class="my-0 fw-normal">{{ top.name }}</h4>
+                <div class="card-header py-3 top-card-header">
+                    <h4 class="my-0 fw-bold">{{ top.name }}</h4>
                 </div>
 
                 <div class="card-body">
@@ -35,6 +36,11 @@
                     <p class="mt-2">
                         <strong>Quantity:</strong> {{ top.quantity }}
                     </p>
+                </div>
+
+                <!-- Mirror Reflection -->
+                <div class="mirror">
+                    <img class="topImg img-fluid" [src]="imageUrl + top.picByte" alt="Product reflection" />
                 </div>
 
             </div>

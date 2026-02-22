@@ -1,24 +1,167 @@
-#floating-panel {
-  background: linear-gradient(rgba(37, 36, 36, .815), rgba(27, 25, 25, .753));
-  padding: 2px 4px;
-  opacity: 0.7;
-  border-radius: 10px;
-  color: #fff;
-  width: fit-content;
-  float: right;
+/* General Container */
+.contain {
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(135deg, #e0f7fa, #e1bee7);
+  min-height: 100vh;
+  padding: 2rem;
   display: flex;
-  align-items: center;
   justify-content: center;
-  flex-direction: column;
-  position: relative;
-  right: 10px;
+  align-items: flex-start;
 }
 
-.contain {
-  background: url('../../assets/images/bg.jpg');
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  min-height: 100vh;
+/* Floating panel */
+#floating-panel {
+  width: 100%;
+  max-width: 600px;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(20px);
+  border-radius: 25px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.25);
+  padding: 2.5rem;
+  margin-top: 2rem;
+}
+
+/* Form title */
+.form-title {
+  text-align: center;
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 2rem;
+  color: #00acc1;
+  text-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+/* Floating labels */
+.floating-label {
   position: relative;
+  margin-bottom: 1.8rem;
+}
+
+.floating-label input,
+.floating-label select {
+  width: 100%;
+  padding: 0.75rem 0.75rem;
+  border: none;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.6);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.floating-label label {
+  position: absolute;
+  left: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #555;
+  font-size: 1rem;
+  pointer-events: none;
+  transition: 0.3s ease all;
+}
+
+.floating-label input:focus+label,
+.floating-label input:not(:placeholder-shown)+label,
+.floating-label select:focus+label,
+.floating-label select:not(:placeholder-shown)+label {
+  top: -10px;
+  left: 12px;
+  font-size: 0.85rem;
+  color: #00acc1;
+  background: rgba(255, 255, 255, 0.7);
+  padding: 0 5px;
+  border-radius: 5px;
+}
+
+/* Image input & preview */
+.image-label {
+  font-weight: 100;
+  color: #00acc1;
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+.image-input {
+  border-radius: 12px;
+  padding: 0.5rem;
+  background: rgba(255, 255, 255, 0.6);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.image-preview img {
+  margin-top: 0.8rem;
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease;
+}
+
+.image-preview img:hover {
+  transform: scale(1.1);
+}
+
+/* Submit button */
+.submit-wrapper {
+  text-align: center;
+  margin-top: 2rem;
+}
+
+.submit-btn {
+  background: linear-gradient(135deg, #00bfa5, #00acc1);
+  color: #fff;
+  padding: 0.7rem 2rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  border-radius: 50px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.submit-btn:hover {
+  transform: scale(1.05);
+  background: linear-gradient(135deg, #00acc1, #00bfa5);
+}
+
+/* Smooth focus & shadow effect */
+input:focus,
+select:focus {
+  outline: none;
+  box-shadow: 0 6px 20px rgba(0, 172, 193, 0.5);
+}
+
+/* Add a down arrow for select inputs */
+.select-wrapper select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background: rgba(255, 255, 255, 0.6);
+  padding-right: 2.5rem;
+  /* space for the arrow */
+  position: relative;
+}
+
+/* Add a pseudo-element for the arrow */
+.select-wrapper::after {
+  content: "▼";
+  /* Unicode down arrow */
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  color: #555;
+  font-size: 0.8rem;
+}
+
+/* Optional: on focus, change arrow color */
+.select-wrapper select:focus+label,
+.select-wrapper select:not(:placeholder-shown)+label {
+  color: #00acc1;
+}
+
+.select-wrapper select:focus+label::after {
+  color: #00acc1;
 }

@@ -4,52 +4,49 @@
       <strong>Deleted</strong> Successfully!
       <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
-    <div class="input-group mb-3">
-      <input type="text" name="search" class="form-control" aria-label="Sizing example input"
-        aria-describedby="inputGroup-sizing-default" placeholder="search item here" [(ngModel)]="searchItem">
-  
+
+    <div class="input-group mb-3 search-wrapper">
+      <input type="text" name="search" class="form-control" placeholder="Search item here" [(ngModel)]="searchItem">
+      <span class="search-icon">🔍</span>
     </div>
-  
-    <h1>Products List</h1>
-    <p id="product-list" *ngIf="nodata">No Data To Show</p>
+
+    <h1 class="page-title">Products List</h1>
+    <p id="product-list" *ngIf="nodata" class="nodata">No Data To Show</p>
+
     <div *ngIf="!nodata" id="scroll-div">
-      <table style="background: none;" class="table table-success">
+      <table class="table modern-table">
         <thead>
           <tr>
-            <!-- <th scope="col">Id</th> -->
-            <th scope="col">Name</th>
-            <th scope="col">UnitPrice</th>
-            <th scope="col">Quantity</th>
-            <th scope="col">TotalAmount</th>
-            <th scope="col">Date</th>
-            <th scope="col">Image</th>
-            <th scope="col">Status</th>
-            <th scope="col">Operations</th>
+            <th>Name</th>
+            <th>Unit Price</th>
+            <th>Quantity</th>
+            <th>Total Amount</th>
+            <th>Date</th>
+            <th>Image</th>
+            <th>Status</th>
+            <th>Operations</th>
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let pro of Allproducts |filter:searchItem">
-            <!-- <td>{{pro.id}}</td> -->
+          <tr *ngFor="let pro of Allproducts | filter:searchItem">
             <td>{{pro.name}}</td>
             <td>{{pro.unitprice | currency:"INR":"symbol"}}</td>
             <td>{{pro.quantity}}</td>
-            <td>{{pro.totalamount | currency:"INR":"symbol"}} </td>
+            <td>{{pro.totalamount | currency:"INR":"symbol"}}</td>
             <td>{{pro.date.slice(0,10)}}</td>
             <td><img class="databaseImgs" src="{{imageUrl}}{{pro.picByte}}" alt="failed" /></td>
             <td>{{pro.status}}</td>
-            <td> <button class="btn btn-danger" (click)="delete(pro.id)">
-                Delete
-              </button>
-              <a style="margin-left: 4px;" class="btn btn-primary" data-bs-toggle="collapse" href="#collapseExample" role="button"
-                routerLink="/productupdate/{{pro.id}}">
+            <td>
+              <button class="btn btn-danger btn-sm" (click)="delete(pro.id)">Delete</button>
+              <a class="btn btn-primary btn-sm" style="margin-left: 4px;" routerLink="/productupdate/{{pro.id}}">
                 Edit
               </a>
-  
             </td>
           </tr>
         </tbody>
       </table>
     </div>
-    <button *ngIf="!nodata" class="btn btn-danger" (click)="deleteAllProducts()">Delete All</button>
+
+    <button *ngIf="!nodata" class="btn btn-danger mt-3 delete-all-btn" (click)="deleteAllProducts()">Delete All</button>
   </div>
 </div>
