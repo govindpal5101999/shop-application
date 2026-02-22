@@ -1,4 +1,8 @@
 <div class="contain">
+  <!-- Success message -->
+  <div *ngIf="successMessage" class="success-msg">
+    {{ successMessage }}
+  </div>
   <div id="floating-panel">
     <h2 class="form-title">Add Products</h2>
     <form [formGroup]="stationeryForm" (ngSubmit)="onSubmit()" class="modern-form">
@@ -52,9 +56,12 @@
 
       <!-- Submit Button -->
       <div class="form-group submit-wrapper">
-        <button type="submit" class="btn submit-btn">Submit</button>
+        <button type="submit" class="btn submit-btn" [disabled]="loading">Submit</button>
       </div>
-
+      <!-- Loading spinner -->
+      <div *ngIf="loading" class="overlay">
+        <img src="assets/images/spinner.gif" alt="Loading..." class="spinner" />
+      </div>
     </form>
   </div>
 </div>

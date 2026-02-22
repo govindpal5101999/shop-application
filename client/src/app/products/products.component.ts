@@ -94,10 +94,12 @@ export class ProductsComponent implements OnInit {
     this.stationeryForm.get('totalamount').setValue(UPQ);
   }
 
+  loading: boolean = false;
+  successMessage: string = '';
 
   onSubmit() {
 
-
+    this.loading = true;
     const formData = new FormData();
     formData.append('file', this.image);
     const datalist = this.stationeryForm.value;
@@ -106,7 +108,8 @@ export class ProductsComponent implements OnInit {
     if (this.stationeryForm.valid) {
       this._postService.postImg(formData).subscribe({
         next: (res) => {
-          alert('Data Saved Successfully');
+          this.loading = false;
+          // alert('Data Saved Successfully');
           this.stationeryForm.get('name').setValue('');
           this.stationeryForm.get('quantity').setValue('');
           this.stationeryForm.get('unitprice').setValue('');
@@ -118,8 +121,16 @@ export class ProductsComponent implements OnInit {
           const emptyFile = document.createElement('input');
           emptyFile.type = 'file';
           file.files = emptyFile.files;
+
+          this.successMessage = 'Data Saved Successfully!';
+          setTimeout(() => {
+            this.successMessage = '';
+          }, 3000);
         }
-      }), (error) => { alert('error in saving data') }
+      }), (error) => {
+        this.loading = false;
+        alert('error in saving data')
+      }
     } else {
       alert('All fields are mendatory');
     }
