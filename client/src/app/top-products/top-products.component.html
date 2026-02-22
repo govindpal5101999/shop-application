@@ -1,46 +1,44 @@
 <div class="contain">
+
+    <!-- HEADER -->
     <header>
         <div class="pricing-header p-3 pb-md-4 mx-auto text-center">
-            <h1 style="color: rgb(176, 209, 194); font-weight: bold; font-size: 32px;" class="display-4 fw-normal">Top 5
-                Selling Products</h1>
-            <p>
-                <input type="date" class="form-control date-input" [(ngModel)]="customDate" (change)="changeDate()"
-                    required />
-                <button [disabled]="!getDate" class="btn btn-primary" type="button" id="button-addon2"
-                    (click)="getQuantity()">Get</button>
-            </p>
+            <h1 class="display-4 fw-normal" style="color: rgb(176, 209, 194); font-weight: bold; font-size: 32px;">
+                Top 5 Selling Products
+            </h1>
 
+            <!-- Date input (for future use, no API call yet) -->
+            <input type="date" class="form-control date-input mx-auto" style="max-width: 250px;"
+                [(ngModel)]="customDate" (change)="changeDate()" />
         </div>
     </header>
 
-    <div class="row row-cols-1 row-cols-md-3 mr-3 text-center scroll-stop">
-        <p id="top-para" *ngIf="nodata">No Data To Show</p>
-        <table *ngIf="!nodata" id="top-table">
-            <tbody style="display: flex; flex-direction: row; flex-flow: wrap; width: 100%;">
-                <tr style="display: flex; flex-direction: column; margin: 7px 7px; width: 240px;"
-                    *ngFor="let top of topData">
-                    <div class="card mb-4 rounded-3 shadow-sm ">
-                        <td>
-                            <div class="card-header py-3">
-                                <h1 class="my-0 fw-normal">{{top.name}}</h1>
-                            </div>
-                        </td>
-                        <td>
-                            <h1 class="card-title pricing-card-title">₹{{top.unitprice}}</h1>
-                        </td>
-                        <td>
-                            <div class="card-body"><img class="topImg" src="{{imageUrl}}{{top.picByte}}" alt="failed" />
-                            </div>
-                        </td>
-                        <td>
-                            <p>Quantity:{{top.quantity}}</p>
-                        </td>
-                    </div>
-                </tr>
-            </tbody>
+    <!-- NO DATA -->
+    <p id="top-para" class="text-center text-danger" *ngIf="nodata">
+        No Data To Show
+    </p>
 
-        </table>
+    <!-- PRODUCTS -->
+    <div class="row row-cols-1 row-cols-md-5 g-4 justify-content-center" *ngIf="!nodata">
+        <div class="col" *ngFor="let top of topData">
+            <div class="card mb-4 rounded-3 shadow-sm h-100 text-center">
 
+                <div class="card-header py-3">
+                    <h4 class="my-0 fw-normal">{{ top.name }}</h4>
+                </div>
+
+                <div class="card-body">
+                    <h3 class="card-title">₹{{ top.unitprice }}</h3>
+
+                    <img class="topImg img-fluid my-2" [src]="imageUrl + top.picByte" alt="Product image" />
+
+                    <p class="mt-2">
+                        <strong>Quantity:</strong> {{ top.quantity }}
+                    </p>
+                </div>
+
+            </div>
+        </div>
     </div>
 
 </div>

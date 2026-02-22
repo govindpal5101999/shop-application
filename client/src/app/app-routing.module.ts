@@ -7,6 +7,8 @@ import { ProductListComponent } from './product-list/product-list.component';
 import { ProductUpdateComponent } from './product-update/product-update.component';
 import { ProductsComponent } from './products/products.component';
 import { TopProductsComponent } from './top-products/top-products.component';
+import { ProductListResolver } from './guards/product-list.resolver';
+import { TopProductsResolver } from './guards/top-products.resolver';
 
 const routes: Routes = [
   {
@@ -19,7 +21,11 @@ const routes: Routes = [
     path: "products", component: ProductsComponent
   },
   {
-    path: "productList", component: ProductListComponent
+    path: "productList",
+    component: ProductListComponent,
+    resolve: {
+      products: ProductListResolver
+    }
   },
   {
     path: "productupdate/:id", component: ProductUpdateComponent
@@ -28,7 +34,11 @@ const routes: Routes = [
     path: "about", component: AboutComponent
   },
   {
-    path: "topProducts", component: TopProductsComponent
+    path: "topProducts",
+    component: TopProductsComponent,
+    resolve: {
+      topProducts: TopProductsResolver
+    }
   },
   {
     path: "contactUs", component: ContactUsComponent

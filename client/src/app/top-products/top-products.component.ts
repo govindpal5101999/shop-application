@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { PostService } from '../service/http.service';
-import $ from 'jquery';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-top-products',
@@ -9,43 +8,30 @@ import $ from 'jquery';
 })
 export class TopProductsComponent implements OnInit {
 
-  url: any = 'http://localhost:3000/images/';
-  customDate: any;
-  topData:any= [];
-  maxQuantity: any;
-  getDate: boolean = false;
+  customDate!: string;
+  topData: any[] = [];
   nodata: boolean = false;
+  getDate: boolean = false;
+
   imageUrl = 'data:image/jpeg;base64,';
 
-  constructor(private _postService: PostService) { }
+  constructor(private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-        this.timeZone();
-        this.getQuantity();
+    this.setTodayDate();
+
+    const resolvedData = this.route.snapshot.data['topProducts'];
+
+    this.topData = Array.isArray(resolvedData) ? resolvedData : [];
+    this.nodata = this.topData.length === 0;
   }
 
-  timeZone() {
-    var d = new Date();
-    this.customDate = `${d.getFullYear()}-${('0' + (d.getMonth()+1)).slice(-2)}-${('0' + (d.getDate())).slice(-2)}`
-    console.log(this.customDate)
+  setTodayDate() {
+    const d = new Date();
+    this.customDate = `${d.getFullYear()}-${('0' + (d.getMonth() + 1)).slice(-2)}-${('0' + d.getDate()).slice(-2)}`;
   }
 
-
-  getQuantity(){
-    this._postService.findTopItems(this.customDate).subscribe(res =>{
-      if(!res){
-        this.nodata = true; 
-      }else{
-        this.nodata = false;
-        this.topData  = res;
-      }
-    })
-
-    this.getDate = false
+  changeDate() {
+    this.getDate = true;
   }
-
-changeDate(){
-  this.getDate = true;
-}
-
 }
