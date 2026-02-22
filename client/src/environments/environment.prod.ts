@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://shop-backend.onrender.com'
+  apiUrl: 'https://shop-application-sfhh.onrender.com'
 };
