@@ -1,58 +1,60 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Products } from '../products';
-  
+import { environment } from 'src/environments/environment';
+
 @Injectable({
   providedIn: 'root'
 })
 export class PostService {
 
-  private product:Products;
+  private product: Products;
 
-  public _url = 'http://localhost:8086/api/store'
-   
+  // public _url = 'http://localhost:8086/api/store'
+  public _url = `${environment.apiUrl}/api/store`;
+
   constructor(private httpClient: HttpClient) { }
 
-  getData(){
+  getData() {
     return this.httpClient.get(this._url);
   }
 
-  getDataById(id){
+  getDataById(id) {
     return this.httpClient.get(`${this._url}/${id}`)
   }
 
-  postImg(img){
+  postImg(img) {
     return this.httpClient.post(this._url, img)
   }
 
-  getSaleStatus(sale){
+  getSaleStatus(sale) {
     return this.httpClient.get(`${this._url}/getStatus/${sale}`)
   }
 
-  getUnpaidStatus(purchase){
+  getUnpaidStatus(purchase) {
     return this.httpClient.get(`${this._url}/getStatus/${purchase}`)
   }
 
-  deleteProductById(id){
+  deleteProductById(id) {
     return this.httpClient.delete(`${this._url}/${id}`)
   }
 
-  deleteProducts(){
+  deleteProducts() {
     return this.httpClient.delete(this._url);
   }
 
-  findByDate(date){
+  findByDate(date) {
     return this.httpClient.get(`${this._url}/getDate/${date}`)
   }
 
-  findTopItems(date){
+  findTopItems(date) {
     return this.httpClient.get(`${this._url}/top/${date}`)
   }
 
-  update(id:any, data:any){
+  update(id: any, data: any) {
     return this.httpClient.put(`${this._url}/update/${id}`, data)
   }
 
 
-  
+
 }
