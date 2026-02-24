@@ -3,13 +3,13 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
-import {MatToolbarModule} from '@angular/material/toolbar';
-import {MatSidenavModule} from '@angular/material/sidenav';
-import {MatIconModule} from '@angular/material/icon'
-import {MatListModule} from '@angular/material/list'
-import {MatCheckboxModule} from '@angular/material/checkbox';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatIconModule } from '@angular/material/icon'
+import { MatListModule } from '@angular/material/list'
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
-import {MatButtonModule} from '@angular/material/button';
+import { MatButtonModule } from '@angular/material/button';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ProductsComponent } from './products/products.component';
 import { HomeComponent } from './home/home.component';
@@ -21,6 +21,8 @@ import { ProductUpdateComponent } from './product-update/product-update.componen
 import { TopProductsComponent } from './top-products/top-products.component';
 import { ContactUsComponent } from './contact-us/contact-us.component';
 import { NavBarComponent } from './nav-bar/nav-bar.component';
+import { FullScreenLoaderComponent } from './shared/full-screen-loader/full-screen-loader.component';
+import { LoaderInterceptor } from './core/loader.interceptor';
 
 @NgModule({
   declarations: [
@@ -33,7 +35,8 @@ import { NavBarComponent } from './nav-bar/nav-bar.component';
     ProductUpdateComponent,
     TopProductsComponent,
     ContactUsComponent,
-    NavBarComponent
+    NavBarComponent,
+    FullScreenLoaderComponent
   ],
   imports: [
     BrowserModule,
@@ -49,7 +52,13 @@ import { NavBarComponent } from './nav-bar/nav-bar.component';
     ReactiveFormsModule,
     Ng2SearchPipeModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: LoaderInterceptor,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

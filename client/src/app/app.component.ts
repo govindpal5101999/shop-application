@@ -1,7 +1,12 @@
 import { Component } from '@angular/core';
-import { PostService } from './service/http.service';
-import {Products} from './products';
-import { Router } from '@angular/router';
+import {
+  Router,
+  NavigationStart,
+  NavigationEnd,
+  NavigationCancel,
+  NavigationError
+} from '@angular/router';
+import { LoaderService } from './core/loader.service';
 
 @Component({
   selector: 'app-root',
@@ -9,14 +14,24 @@ import { Router } from '@angular/router';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'Avind Store WepApp';
+  constructor(
+    private router: Router,
+    private loader: LoaderService
+  ) {
+    this.router.events.subscribe(event => {
 
-  constructor(private _postService:PostService, private router: Router){}
+      if (event instanceof NavigationStart) {
+        this.loader.show();
+      }
 
-  // newProduct(event){
-  //   event.preventDefault();
-  //   this._postService.setter(new Products());
-  //   this.router.navigate(['/productupdate'])
+      if (
+        event instanceof NavigationEnd ||
+        event instanceof NavigationCancel ||
+        event instanceof NavigationError
+      ) {
+        this.loader.hide();
+      }
 
-  // }
+    });
+  }
 }
