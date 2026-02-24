@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: shop-application
+    env: static
+
+    staticPublishPath: dist/osm-map
+
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
