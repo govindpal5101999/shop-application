@@ -7,12 +7,12 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 
 
 @SpringBootApplication()
-public class WindDatawithJpadataApplication implements CommandLineRunner{
+public class App implements CommandLineRunner{
 	
 	
 	public static void main(String[] args) {
 		
-	SpringApplication.run(WindDatawithJpadataApplication.class, args);
+	SpringApplication.run(App.class, args);
 	}
 
 	@Override

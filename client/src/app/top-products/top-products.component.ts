@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { PostService } from '../service/http.service';
 
 @Component({
   selector: 'app-top-products',
@@ -14,9 +13,9 @@ export class TopProductsComponent implements OnInit {
   nodata: boolean = false;
   getDate: boolean = false;
 
-  imageUrl = 'data:image/jpeg;base64,';
+  imageUrl = 'data:image/png;base64,';
 
-  constructor(private route: ActivatedRoute, private _postService: PostService) { }
+  constructor(private route: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.setTodayDate();
@@ -26,6 +25,7 @@ export class TopProductsComponent implements OnInit {
 
     this.topData = Array.isArray(resolvedData) ? resolvedData : [];
     this.nodata = this.topData.length === 0;
+    console.log('top products -->', this.topData)
   }
 
   setTodayDate() {
@@ -37,18 +37,4 @@ export class TopProductsComponent implements OnInit {
     this.getDate = true;
   }
 
-  getQuantity() {
-    // Ensure you show the spinner or some loading indicator if needed
-    this._postService.findTopItems(this.customDate).subscribe(res => {
-      if (!res) {
-        this.nodata = true; // Show no data message if the response is empty
-      } else {
-        this.nodata = false; // Hide no data message if the response is valid
-        this.topData = res; // Update your topData array with the new data
-      }
-    });
-
-    // Reset the getDate flag (disable the button after clicking)
-    this.getDate = false;
-  }
 }

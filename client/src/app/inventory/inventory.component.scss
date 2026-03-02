@@ -1,0 +1,160 @@
+/* Main container */
+.contain {
+    max-width: 1100px;
+    margin: 1.5rem auto;
+    padding: 1.8rem;
+    background: #0f172a;
+    /* dark slate */
+    border-radius: 18px;
+    color: #e5e7eb;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.45);
+}
+
+/* Headings */
+.contain h2,
+.contain h3,
+.contain h4 {
+    color: #f8fafc;
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+/* Search box */
+.contain input.form-control {
+    background: #020617;
+    border: 1px solid #334155;
+    color: #e5e7eb;
+    border-radius: 10px;
+}
+
+.contain input.form-control::placeholder {
+    color: #94a3b8;
+}
+
+.contain input.form-control:focus {
+    background: #020617;
+    color: #e5e7eb;
+    border-color: #38bdf8;
+    box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.2);
+}
+
+/* Inventory table */
+.modern-table {
+    margin-top: 1rem;
+    border-radius: 14px;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.modern-table thead {
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.modern-table th {
+    text-align: center;
+    font-weight: 600;
+    color: #e0f2fe;
+    border-bottom: 1px solid #334155;
+}
+
+.modern-table td {
+    text-align: center;
+    color: #e5e7eb;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    vertical-align: middle;
+}
+
+/* Hover effect */
+.modern-table tbody tr:hover {
+    background: rgba(255, 255, 255, 0.04);
+}
+
+/* Available qty highlight */
+.modern-table td:nth-child(2) {
+    font-weight: 600;
+    color: #22c55e;
+    /* green */
+}
+
+/* Price */
+.modern-table td:nth-child(3) {
+    color: #38bdf8;
+    font-weight: 600;
+}
+
+/* Buttons */
+button.btn-success {
+    background: linear-gradient(135deg, #22c55e, #16a34a);
+    border: none;
+    border-radius: 8px;
+    padding: 0.35rem 0.8rem;
+    font-size: 0.8rem;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+button.btn-success:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 18px rgba(34, 197, 94, 0.4);
+}
+
+button.btn-primary {
+    margin-top: 1rem;
+    background: linear-gradient(135deg, #38bdf8, #2563eb);
+    border: none;
+    border-radius: 10px;
+    padding: 0.5rem 1.2rem;
+    font-weight: 600;
+}
+
+/* Bill section */
+hr {
+    border-color: rgba(255, 255, 255, 0.12);
+}
+
+.table:not(.modern-table) {
+    margin-top: 0.8rem;
+}
+
+.table:not(.modern-table) td {
+    color: #e5e7eb;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* Total */
+.contain h4 {
+    margin-top: 1rem;
+    color: #22c55e;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .contain {
+        padding: 1.2rem;
+    }
+
+    .modern-table th,
+    .modern-table td {
+        font-size: 0.85rem;
+        padding: 0.6rem;
+    }
+}
+
+.qty-control {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.qty {
+    min-width: 24px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.product-img {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+}

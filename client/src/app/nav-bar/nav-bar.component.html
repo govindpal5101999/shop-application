@@ -1,30 +1,123 @@
-<nav class="navbar navbar-expand-md navbar-glass" aria-label="Main navigation">
+<nav class="navbar navbar-expand-lg navbar-glass">
   <div class="container-fluid">
-    <!-- Logo -->
-    <a class="navbar-brand" href="#">
-      <img src="../assets/images/logo_home.avif" alt="Logo" class="navbar-logo">
+
+    <!-- LOGO -->
+    <a class="navbar-brand fw-bold text-white" routerLink="/home">
+      ShopPro
     </a>
 
-    <!-- Toggler -->
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample04"
-      aria-controls="navbarsExample04" aria-expanded="false" aria-label="Toggle navigation">
+    <!-- TOGGLER -->
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar">
       <span class="navbar-toggler-icon"></span>
     </button>
 
-    <!-- Nav links -->
-    <div class="collapse navbar-collapse" id="navbarsExample04">
-      <ul class="navbar-nav ms-auto mb-2 mb-md-0">
-        <li class="nav-item"><a class="nav-link" routerLink="/home">Home</a></li>
-        <li class="nav-item"><a class="nav-link" routerLink="/products">Add Products</a></li>
-        <li class="nav-item"><a class="nav-link" routerLink="/productList">Products List</a></li>
+    <!-- COLLAPSIBLE CONTENT -->
+    <div class="collapse navbar-collapse" id="mainNavbar">
+
+      <ul class="navbar-nav ms-auto align-items-lg-center">
+
+        <!-- PUBLIC LINKS -->
         <li class="nav-item">
-          <a class="nav-link" routerLink="/topProducts">
-            Top Products
+          <a class="nav-link" routerLink="/home">
+            <i class="bi bi-house-door"></i> Home
           </a>
         </li>
-        <li class="nav-item"><a class="nav-link" routerLink="/about">About</a></li>
-        <li class="nav-item"><a class="nav-link" routerLink="/contactUs">Contact Us</a></li>
+
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/about">
+            <i class="bi bi-info-circle"></i> About
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/contactUs">
+            <i class="bi bi-envelope"></i> Contact
+          </a>
+        </li>
+
+        <!-- ADMIN ONLY -->
+        <ng-container *ngIf="auth.isAdmin()">
+
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/products">
+              <i class="bi bi-plus-square"></i> Add Products
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/productList">
+              <i class="bi bi-list"></i> Products List
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/topProducts">
+              <i class="bi bi-award"></i> Top Products
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/inventory">
+              <i class="bi bi-box-seam"></i> Inventory
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/billing">
+              <i class="bi bi-receipt"></i> Billing
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/bill-history">
+              <i class="bi bi-clock-history"></i> History
+            </a>
+          </li>
+
+        </ng-container>
+
+        <!-- NOT LOGGED IN -->
+        <ng-container *ngIf="!auth.isLoggedIn()">
+
+          <li class="nav-item">
+            <a class="nav-link login-btn" routerLink="/login">
+              <i class="bi bi-box-arrow-in-right"></i> Login
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link signup-btn" routerLink="/signup">
+              <i class="bi bi-person-plus"></i> Sign Up
+            </a>
+          </li>
+
+        </ng-container>
+
+        <!-- CART -->
+        <li class="nav-item position-relative" *ngIf="auth.isLoggedIn()">
+          <a class="nav-link cart-nav" (click)="goToCart()">
+            <i class="bi bi-cart3"></i>
+
+            <span class="cart-badge" *ngIf="cartService.getTotalCount() > 0">
+              {{ cartService.getTotalCount() }}
+            </span>
+          </a>
+        </li>
+
+        <!-- LOGGED IN -->
+        <ng-container *ngIf="auth.isLoggedIn()">
+
+          <li class="nav-item">
+            <a class="nav-link logout-btn" (click)="logout()">
+              <i class="bi bi-box-arrow-right"></i> Logout
+            </a>
+          </li>
+
+        </ng-container>
+
       </ul>
+
     </div>
+
   </div>
 </nav>

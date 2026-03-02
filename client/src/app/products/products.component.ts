@@ -1,6 +1,8 @@
-import { Component, OnInit, Type } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { PostService } from '../service/http.service';
-import { FormControl, FormGroup, FormBuilder, Validators } from "@angular/forms";
+import { FormGroup, FormBuilder, Validators } from "@angular/forms";
+
+
 
 @Component({
   selector: 'app-products',
@@ -9,125 +11,145 @@ import { FormControl, FormGroup, FormBuilder, Validators } from "@angular/forms"
 })
 export class ProductsComponent implements OnInit {
 
-  stationeryForm: FormGroup;
-  SalePurchasetatus: string[] = ['Sale', 'Purchase'];
-  default: string = 'Sale';
-  imageUrl: any;
+  @ViewChild('fileInput') fileInput!: ElementRef;
 
-  constructor(private _postService: PostService, public formBuilder: FormBuilder) {
+  stationeryForm!: FormGroup;
+
+  image: File | null = null;
+  imageUrl: any = null;
+
+  successMessage: string = '';
+  errorMessage: string = '';
+
+  constructor(
+    private _postService: PostService,
+    private formBuilder: FormBuilder
+  ) { }
+
+  ngOnInit(): void {
+
     this.stationeryForm = this.formBuilder.group({
       name: ['', Validators.required],
       unitprice: ['', Validators.required],
       quantity: ['', Validators.required],
       totalamount: ['', Validators.required],
-      date: [''],
-      // image: ['', Validators.required],
-      status: new FormControl(null)
-    })
-
-    this.stationeryForm.controls['status'].setValue(this.default, { onlySelf: true });
-  }
-
-  unitPrice: any;
-  totalAmount: any;
-  quantity: any;
-  image: any;
-
-
-
-  ngOnInit(): void {
-
-
-    document.getElementById('TA').addEventListener('mouseenter', () => {
-      this.totalAmount = this.quantity * this.unitPrice
-    })
+      date: ['']
+    });
 
   }
 
+  // -----------------------------
+  // File Selection
+  // -----------------------------
+  selectFile(event: any) {
 
-  //For Post Method---->
-  selectFile(event) {
-    //for selecting multiple files---->
-    this.image = event.target.files[0];
+    const file = event.target.files[0];
+    if (!file) return;
 
-    if (this.image) {
-      for (let i = 0; i < this.image.length; i++) {
-        this.checktype(this.image);
-      }
-    }
+    if (
+      file.type === 'image/jpeg' ||
+      file.type === 'image/jpg' ||
+      file.type === 'image/png'
+    ) {
+      this.image = file;
 
-    const reader = new FileReader();
-
-    // this.imageUrl = this.image;
-    reader.readAsDataURL(this.image);
-    reader.onload = (_event) => {
-      this.imageUrl = reader.result;
-      console.warn(this.imageUrl)
-
-    }
-
-    console.log(this.image)
-  }
-
-  checktype(file: File) {
-    if (file.type === "image/jpeg" || file.type === 'image/jpg' || file.type === 'image/png') {
-      (document.getElementById('subBtn') as HTMLButtonElement).disabled = false;
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => {
+        this.imageUrl = reader.result;
+      };
     } else {
       alert('Please choose jpeg, png, jpg file');
-      (document.getElementById('subBtn') as HTMLButtonElement).disabled = true;
-    }
-  }
-
-  unitPriceChange() {
-    var UP = this.stationeryForm.get('unitprice').value;
-    var Q = this.stationeryForm.get('quantity').value;
-    var UPQ = UP * Q;
-
-    this.stationeryForm.get('totalamount').setValue(UPQ);
-  }
-
-  quantityChange() {
-    var UP = this.stationeryForm.get('unitprice').value;
-    var Q = this.stationeryForm.get('quantity').value;
-    var UPQ = UP * Q;
-
-    this.stationeryForm.get('totalamount').setValue(UPQ);
-  }
-
-  successMessage: string = '';
-
-  onSubmit() {
-    const formData = new FormData();
-    formData.append('file', this.image);
-    const datalist = this.stationeryForm.value;
-    formData.append('datalist', JSON.stringify(datalist));
-
-    if (this.stationeryForm.valid) {
-      this._postService.postImg(formData).subscribe({
-        next: (res) => {
-          this.stationeryForm.get('name').setValue('');
-          this.stationeryForm.get('quantity').setValue('');
-          this.stationeryForm.get('unitprice').setValue('');
-          this.stationeryForm.get('totalamount').setValue('');
-          this.stationeryForm.get('date').setValue('');
-          this.imageUrl = false;
-          this.stationeryForm.get('status').setValue('');
-          var file: any = document.querySelector('#imagefile');
-          const emptyFile = document.createElement('input');
-          emptyFile.type = 'file';
-          file.files = emptyFile.files;
-
-          this.successMessage = 'Data Saved Successfully!';
-          setTimeout(() => {
-            this.successMessage = '';
-          }, 3000);
-        }
-      }), (error) => {
-        alert('error in saving data')
+      if (this.fileInput) {
+        this.fileInput.nativeElement.value = '';
       }
-    } else {
-      alert('All fields are mendatory');
     }
+  }
+
+  // -----------------------------
+  // Auto Calculate Total
+  // -----------------------------
+  calculateTotal() {
+    const unitPrice = this.stationeryForm.get('unitprice')?.value || 0;
+    const quantity = this.stationeryForm.get('quantity')?.value || 0;
+    const total = unitPrice * quantity;
+
+    this.stationeryForm.get('totalamount')?.setValue(total);
+  }
+
+  // -----------------------------
+  // Normalize Name
+  // -----------------------------
+  capitalizeFirstLetter(name: string) {
+    return name.charAt(0).toUpperCase() + name.slice(1);
+  }
+
+  normalizeName() {
+    let name = this.stationeryForm.get('name')?.value;
+
+    if (name) {
+      name = this.capitalizeFirstLetter(name.toLowerCase());
+      this.stationeryForm.get('name')?.setValue(name);
+    }
+  }
+
+  // -----------------------------
+  // Submit
+  // -----------------------------
+  onSubmit() {
+
+    if (!this.stationeryForm.valid) {
+      alert('All fields are mandatory');
+      return;
+    }
+
+    this.normalizeName();
+
+    const formData = new FormData();
+
+    if (this.image) {
+      formData.append('file', this.image);
+    }
+
+    formData.append(
+      'datalist',
+      JSON.stringify(this.stationeryForm.value)
+    );
+
+    this._postService.postImg(formData).subscribe({
+
+      next: (response: any) => {
+
+        this.errorMessage = '';
+        this.successMessage = response.message;;
+
+        this.stationeryForm.reset();
+        this.image = null;
+        this.imageUrl = null;
+
+        if (this.fileInput) {
+          this.fileInput.nativeElement.value = '';
+        }
+
+        setTimeout(() => {
+          this.successMessage = '';
+        }, 3000);
+      },
+
+      error: (error) => {
+
+        this.successMessage = '';
+
+        this.errorMessage = 'Something went wrong!';
+        console.error(error);
+
+
+        setTimeout(() => {
+          this.errorMessage = '';
+        }, 3000);
+      }
+
+    });
   }
 
 }

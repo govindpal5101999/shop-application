@@ -1,100 +1,154 @@
-/* Glassmorphism Navbar */
+/* ========================================
+   ULTRA PREMIUM ENTERPRISE NAVBAR
+======================================== */
+
 .navbar-glass {
-    background: rgba(0, 0, 0, 0.6);
-    backdrop-filter: blur(15px);
-    border-bottom: 2px solid rgba(255, 255, 255, 0.2);
-    padding: 0.6rem 2rem;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-    transition: all 0.3s ease;
-    z-index: 1000;
+    position: sticky;
+    top: 0;
+    z-index: 9999;
+
+    background: linear-gradient(135deg,
+            rgba(15, 23, 42, 0.85),
+            rgba(30, 41, 59, 0.85));
+
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+
+    padding: 0.9rem 2.5rem;
+    transition: all 0.3s ease-in-out;
 }
 
-/* Logo */
-.navbar-logo {
-    height: 50px;
-    width: auto;
-    border-radius: 10px;
-    transition: transform 0.3s ease;
+/* BRAND */
+.navbar-brand {
+    font-size: 22px;
+    letter-spacing: 1px;
+    font-weight: 700;
+    color: #ffffff !important;
 }
 
-.navbar-logo:hover {
-    transform: scale(1.1) rotate(-3deg);
-}
-
-/* Navbar links */
+/* NAV LINKS */
 .navbar-glass .nav-link {
-    color: #fff;
+    color: #cbd5e1 !important;
+    font-size: 14px;
     font-weight: 500;
+    padding: 8px 14px;
+    margin: 0 6px;
+    border-radius: 8px;
     position: relative;
-    transition: all 0.3s ease;
-    margin: 0 0.5rem;
+    transition: all 0.35s ease;
 }
 
-/* Gradient hover underline */
-.navbar-glass .nav-link::after {
-    content: '';
-    position: absolute;
-    width: 0;
-    height: 3px;
-    bottom: 0;
-    left: 0;
-    background: linear-gradient(45deg, #00bfa5, #00acc1);
-    border-radius: 2px;
-    transition: width 0.3s ease;
-}
-
-.navbar-glass .nav-link:hover::after {
-    width: 100%;
-}
-
+/* Hover Glow */
 .navbar-glass .nav-link:hover {
-    color: #00bfa5;
+    color: #00f5a0 !important;
+    background: rgba(0, 245, 160, 0.08);
+    box-shadow: 0 0 15px rgba(0, 245, 160, 0.3);
 }
 
-.award-icon:hover {
-    transform: scale(1.2) rotate(10deg);
+/* Active Link */
+.navbar-glass .nav-link.active {
+    color: #00f5a0 !important;
+    background: rgba(0, 245, 160, 0.12);
 }
 
-/* Ensure the navbar-toggler is visible */
+/* ================= LOGIN BUTTON */
+.login-btn {
+    border: 1px solid #00f5a0;
+    border-radius: 50px;
+    padding: 6px 18px !important;
+    margin-left: 10px;
+    transition: all 0.3s ease;
+}
+
+.login-btn:hover {
+    background: rgba(0, 245, 160, 0.15);
+    transform: translateY(-2px);
+}
+
+/* ================= SIGNUP BUTTON */
+.signup-btn {
+    border-radius: 50px;
+    padding: 6px 18px !important;
+    color: #0f172a !important;
+    font-weight: 600;
+    margin-left: 8px;
+    transition: all 0.3s ease;
+}
+
+.signup-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 20px rgba(0, 245, 160, 0.4);
+}
+
+/* ================= LOGOUT */
+.logout-btn {
+    color: #ff4d4d !important;
+    font-weight: 500;
+}
+
+.logout-btn:hover {
+    color: #ff1a1a !important;
+}
+
+/* ================= TOGGLER */
 .navbar-toggler {
     border: none;
-    outline: none;
-    z-index: 1050;
-    border: 2px solid black;
-    /* Set background color of the toggler */
+    background-color: beige;
 }
 
-/* Toggler icon customization with black lines */
-.navbar-toggler-icon {
-    background-color: transparent;
-    /* Ensure background is transparent */
-    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='%23000000' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
-    /* Black lines */
-    z-index: 1050;
-    /* Ensure it’s above other content */
+.navbar-toggler:focus {
+    box-shadow: none;
 }
 
-/* Optional: Make the icon larger on mobile */
-@media (max-width: 768px) {
-    .navbar-toggler-icon {
-        width: 30px;
-        /* Increase width */
-        height: 30px;
-        /* Increase height */
+/* ================= MOBILE */
+@media (max-width: 992px) {
+
+    .navbar-collapse {
+        background: rgba(15, 23, 42, 0.98);
+        padding: 1.2rem;
+        border-radius: 16px;
+        margin-top: 12px;
+        animation: fadeIn 0.4s ease-in-out;
+    }
+
+    .navbar-glass .nav-link {
+        margin: 8px 0;
+    }
+
+}
+
+/* Smooth Animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
     }
 }
 
-/* Responsive adjustments */
-@media (max-width: 768px) {
-    .navbar-glass {
-        padding: 0.5rem 1rem;
-    }
+//cart
 
-    .navbar-toggler {
-        z-index: 1050;
-    }
+.cart-nav {
+    position: relative;
+    cursor: pointer;
+    font-size: 20px;
+}
 
-    .nav-link {
-        margin: 0.3rem 0;
-    }
+.cart-badge {
+    position: absolute;
+    top: -6px;
+    right: -10px;
+    background: #ffd700;
+    color: black;
+    font-size: 11px;
+    padding: 4px 7px;
+    border-radius: 50%;
+    font-weight: bold;
 }

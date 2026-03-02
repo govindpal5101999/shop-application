@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.example.demo.entity;
 
 
 import java.time.LocalDate;
@@ -24,13 +24,14 @@ import com.fasterxml.jackson.annotation.JsonRawValue;
 
 
 @Entity
-@Table(name="storedata")
+@Table(name="Purchase")
 
-public class wind {
+public class PurchaseItem {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
+	 @Column(name = "name", unique = true)
 	private String name;
 	
 	private Float unitprice;
@@ -43,8 +44,6 @@ public class wind {
 	
 	@Column(name = "picByte", length = 1000)
 	private byte[] picByte;
-	
-	private String status;
 
 	public Integer getId() {
 		return id;
@@ -101,21 +100,6 @@ public class wind {
 
 	public void setPicByte(byte[] picByte) {
 		this.picByte = picByte;
-	}
-
-	public String getStatus() {
-		return status;
-	}
-
-	public void setStatus(String status) {
-		this.status = status;
-	}
-
-
-
-	
-
-	
-	
+	}	
 	
 }

@@ -1,130 +1,81 @@
-<main class="contain home-carousel-full">
+<div class="store-container">
 
-    <div id="myCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel">
+    <!-- HERO HEADER -->
+    <section class="hero">
+        <h1>Luxury Stationery Collection</h1>
+        <p>Premium Quality • Elegant Design • Trusted Store</p>
+    </section>
 
-        <!-- Indicators -->
-        <div class="carousel-indicators">
-            <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="0" class="active" aria-current="true"
-                aria-label="Slide 1"></button>
-            <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
-            <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
-        </div>
+    <!-- SEARCH & FILTER -->
+    <section class="filter-section">
 
-        <div class="carousel-inner">
+        <input type="text" placeholder="Search products..." [(ngModel)]="searchText" class="search-input" />
 
-            <!-- Slide 1: Sales Revenue -->
-            <div class="carousel-item active">
-                <div class="slide-bg slide1 d-flex align-items-center justify-content-center">
-                    <div class="carousel-caption glass-card text-center">
-                        <h1>Get sales revenue by choosing date</h1>
-                        <p>Sales revenue for the selected date is managed here.</p>
-                        <div class="d-flex justify-content-center flex-wrap gap-2 mb-2">
-                            <input type="date" class="form-control date-input" [(ngModel)]="customDate"
-                                (change)="changeDate()" />
-                            <button [disabled]="!getDate" class="btn btn-gradient" type="button"
-                                (click)="getDataByDate()">Get</button>
+        <select [(ngModel)]="selectedCategory" class="category-select">
+            <option value="">All Categories</option>
+            <option *ngFor="let cat of categories">{{ cat }}</option>
+        </select>
+
+    </section>
+
+    <!-- PRODUCTS GRID -->
+    <section class="products-section">
+
+        <div class="products-grid">
+
+            <div class="product-card" *ngFor="let product of filteredProducts()">
+
+                <div class="image-box">
+                    <!-- STOCK BADGE -->
+                    <div class="stock-badge" *ngIf="product.availableQty > 0 && product.availableQty <= 5">
+                        Only {{ product.availableQty }} left
+                    </div>
+
+                    <div class="out-badge" *ngIf="product.availableQty === 0">
+                        Out of Stock
+                    </div>
+                    <img [src]="imageUrl + product.image" [alt]="product.name" />
+                </div>
+
+                <div class="product-info">
+                    <h3>{{ product.name }}</h3>
+                    <p class="category">{{ getCategory(product) }}</p>
+
+                    <div class="bottom-row">
+
+                        <span class="price">₹ {{ product.unitPrice }}</span>
+
+                        <!-- STOCK DISPLAY -->
+                        <span class="stock" *ngIf="product.availableQty > 0">
+                            In Stock: {{ product.availableQty }}
+                        </span>
+
+                        <!-- IF NOT IN CART -->
+                        <button *ngIf="!isInCart(product) && product.availableQty > 0" class="buy-btn"
+                            (click)="addToCart(product)">
+                            Add
+                        </button>
+
+                        <!-- IF IN CART AND STOCK > 0 -->
+                        <div class="qty-controls" *ngIf="isInCart(product)">
+
+                            <button (click)="decrease(product)">−</button>
+
+                            <span>{{ getCartItem(product)?.quantity }}</span>
+
+                            <button (click)="increase(product)" [disabled]="product.availableQty === 0">
+                                +
+                            </button>
+
                         </div>
-                        <p id="revenue">Sales revenue as on <b>{{customDate}}</b> is <b>₹{{total}}</b></p>
+
                     </div>
                 </div>
-            </div>
 
-            <!-- Slide 2: Sold Products -->
-            <div class="carousel-item">
-                <div class="slide-bg slide2 d-flex align-items-center justify-content-center">
-                    <div class="carousel-caption glass-card text-center">
-                        <h1>Get all sold products details</h1>
-                        <p>Products are managed here with their sales status.</p>
-                        <button class="btn btn-gradient mb-3" data-bs-toggle="collapse" href="#collapsesale"
-                            role="button" aria-expanded="false" (click)="getSaleDetails()">Sales Status</button>
-                        <div class="collapse" id="collapsesale">
-                            <p *ngIf="nodata">No Data To Show</p>
-                            <div *ngIf="!nodata" class="scroll-table-wrapper">
-                                <table class="table table-glass table-striped">
-                                    <thead>
-                                        <tr>
-                                            <th>Name</th>
-                                            <th>UnitPrice</th>
-                                            <th>Quantity</th>
-                                            <th>TotalAmount</th>
-                                            <th>Date</th>
-                                            <th>Image</th>
-                                            <th>Status</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr *ngFor="let st of Salestatusdata">
-                                            <td>{{st.name}}</td>
-                                            <td>{{st.unitprice | currency:"INR":"symbol"}}</td>
-                                            <td>{{st.quantity}}</td>
-                                            <td>{{st.totalamount | currency:"INR":"symbol"}}</td>
-                                            <td>{{st.date.slice(0,10)}}</td>
-                                            <td><img class="databaseImgs" [src]="imageUrl + st.picByte" alt="failed" />
-                                            </td>
-                                            <td>{{st.status}}</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Slide 3: Purchased Products -->
-            <div class="carousel-item">
-                <div class="slide-bg slide3 d-flex align-items-center justify-content-center">
-                    <div class="carousel-caption glass-card text-center">
-                        <h1>Get all purchased products details</h1>
-                        <p>Another side of status is 'PURCHASE' managed here.</p>
-                        <button class="btn btn-gradient mb-3" type="button" data-bs-toggle="collapse"
-                            data-bs-target="#collapsepurchase" aria-expanded="true"
-                            (click)="getPurchaseDetails()">Purchase Status</button>
-                        <div class="collapse" id="collapsepurchase">
-                            <p *ngIf="nodata">No Data To Show</p>
-                            <div *ngIf="!nodata" class="scroll-table-wrapper">
-                                <table class="table table-glass table-striped">
-                                    <thead>
-                                        <tr>
-                                            <th>Name</th>
-                                            <th>UnitPrice</th>
-                                            <th>Quantity</th>
-                                            <th>TotalAmount</th>
-                                            <th>Date</th>
-                                            <th>Image</th>
-                                            <th>Status</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr *ngFor="let un of Purchasestatusdata">
-                                            <td>{{un.name}}</td>
-                                            <td>{{un.unitprice | currency:"INR":"symbol"}}</td>
-                                            <td>{{un.quantity}}</td>
-                                            <td>{{un.totalamount | currency:"INR":"symbol"}}</td>
-                                            <td>{{un.date.slice(0,10)}}</td>
-                                            <td><img class="databaseImgs" [src]="imageUrl + un.picByte" alt="failed" />
-                                            </td>
-                                            <td>{{un.status}}</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
 
         </div>
 
-        <!-- Carousel Controls -->
-        <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Previous</span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#myCarousel" data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Next</span>
-        </button>
+    </section>
 
-    </div>
-</main>
+</div>

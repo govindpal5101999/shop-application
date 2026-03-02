@@ -1,0 +1,27 @@
+<div class="login-wrapper">
+    <!-- Success Message -->
+    <div *ngIf="successMessage" class="success-msg">
+        {{ successMessage }}
+    </div>
+
+    <!-- Error Message -->
+    <div *ngIf="errorMessage" class="error-msg">
+        {{ errorMessage }}
+    </div>
+
+    <div class="signup-form">
+        <h2>Sign Up</h2>
+        <form (ngSubmit)="register()">
+            <div>
+                <label>Username</label>
+                <input type="text" [(ngModel)]="username" name="username" required />
+            </div>
+            <div>
+                <label>Password</label>
+                <input type="password" [(ngModel)]="password" name="password" required />
+            </div>
+            <button type="submit">Register</button>
+        </form>
+        <p>Already have an account? <a routerLink="/login">Login here</a></p>
+    </div>
+</div>

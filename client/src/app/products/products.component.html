@@ -1,63 +1,68 @@
 <div class="contain">
-  <!-- Success message -->
+
+  <!-- Success Message -->
   <div *ngIf="successMessage" class="success-msg">
     {{ successMessage }}
   </div>
+
+  <!-- Error Message -->
+  <div *ngIf="errorMessage" class="error-msg">
+    {{ errorMessage }}
+  </div>
+
   <div id="floating-panel">
     <h2 class="form-title">Add Products</h2>
+
     <form [formGroup]="stationeryForm" (ngSubmit)="onSubmit()" class="modern-form">
 
       <!-- Product Name -->
       <div class="form-group floating-label">
-        <input type="text" formControlName="name" class="form-control" placeholder=" " />
+        <input type="text" formControlName="name" (blur)="normalizeName()" class="form-control" placeholder=" " />
         <label>Product Name</label>
       </div>
 
       <!-- Unit Price -->
       <div class="form-group floating-label">
-        <input type="text" formControlName="unitprice" class="form-control" placeholder=" "
-          (change)="unitPriceChange()" />
+        <input type="number" formControlName="unitprice" (input)="calculateTotal()" class="form-control"
+          placeholder=" " />
         <label>Unit Price (₹)</label>
       </div>
 
       <!-- Quantity -->
       <div class="form-group floating-label">
-        <input type="text" formControlName="quantity" class="form-control" placeholder=" "
-          (change)="quantityChange()" />
+        <input type="number" formControlName="quantity" (input)="calculateTotal()" class="form-control"
+          placeholder=" " />
         <label>Quantity</label>
       </div>
 
       <!-- Total Amount -->
       <div class="form-group floating-label">
-        <input type="text" formControlName="totalamount" class="form-control" placeholder=" " readonly />
+        <input type="number" formControlName="totalamount" class="form-control" placeholder=" " readonly />
         <label>Total Amount (₹)</label>
       </div>
 
       <!-- Date -->
       <div class="form-group floating-label">
-        <input type="date" formControlName="date" class="form-control" placeholder=" " required />
+        <input type="date" formControlName="date" class="form-control" placeholder=" " />
       </div>
 
-      <!-- Image -->
+      <!-- Image Upload -->
       <div class="form-group">
-        <input type="file" id="imagefile" accept="image/*" class="form-control image-input"
-          (change)="selectFile($event)" formControlName="image" />
+        <input type="file" #fileInput accept="image/*" class="form-control image-input" (change)="selectFile($event)" />
+
+        <!-- Image Preview -->
         <div class="image-preview" *ngIf="imageUrl">
-          <img [src]="imageUrl" alt="failed">
+          <img [src]="imageUrl" alt="Preview" />
         </div>
       </div>
-      <br>
-      <!-- Status -->
-      <div class="form-group floating-label select-wrapper">
-        <select formControlName="status" class="form-control">
-          <option *ngFor="let c of SalePurchasetatus" [ngValue]="c">{{ c }}</option>
-        </select>
+
+      <!-- Submit -->
+      <div class="form-group submit-wrapper">
+        <button type="submit" class="btn submit-btn" [disabled]="stationeryForm.invalid">
+          Submit
+        </button>
       </div>
 
-      <!-- Submit Button -->
-      <div class="form-group submit-wrapper">
-        <button type="submit" class="btn submit-btn">Submit</button>
-      </div>
     </form>
   </div>
 </div>

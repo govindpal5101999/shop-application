@@ -23,6 +23,16 @@ import { ContactUsComponent } from './contact-us/contact-us.component';
 import { NavBarComponent } from './nav-bar/nav-bar.component';
 import { FullScreenLoaderComponent } from './shared/full-screen-loader/full-screen-loader.component';
 import { LoaderInterceptor } from './core/loader.interceptor';
+import { InventoryComponent } from './inventory/inventory.component';
+import { BillingComponent } from './billing/billing.component';
+import { BillHistoryComponent } from './bill-history/bill-history.component';
+import { BillPreviewComponent } from './billing/bill-preview/bill-preview.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AuthInterceptor } from './core/auth.interceptor';
+import { LoginComponent } from './login/login.component';
+import { SignupComponent } from './signup/signup.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { PurchaseComponent } from './purchase/purchase.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +46,15 @@ import { LoaderInterceptor } from './core/loader.interceptor';
     TopProductsComponent,
     ContactUsComponent,
     NavBarComponent,
-    FullScreenLoaderComponent
+    FullScreenLoaderComponent,
+    InventoryComponent,
+    BillingComponent,
+    BillHistoryComponent,
+    BillPreviewComponent,
+    LoginComponent,
+    SignupComponent,
+    DashboardComponent,
+    PurchaseComponent
   ],
   imports: [
     BrowserModule,
@@ -50,14 +68,16 @@ import { LoaderInterceptor } from './core/loader.interceptor';
     MatCheckboxModule,
     FormsModule,
     ReactiveFormsModule,
-    Ng2SearchPipeModule
+    Ng2SearchPipeModule,
+    BrowserAnimationsModule
   ],
   providers: [
     {
       provide: HTTP_INTERCEPTORS,
       useClass: LoaderInterceptor,
       multi: true
-    }
+    },
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]
 })

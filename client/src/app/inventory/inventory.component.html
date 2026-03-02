@@ -1,0 +1,93 @@
+<div class="contain">
+
+    <h2>Available Stock</h2>
+
+    <!-- Search -->
+    <input type="text" placeholder="Search product..." [(ngModel)]="searchText" (input)="search()"
+        class="form-control mb-3" />
+
+    <!-- Inventory Table -->
+    <table class="table modern-table">
+        <thead>
+            <tr>
+                <th>Image</th>
+                <th>Name</th>
+                <th>Available Qty</th>
+                <th>Price</th>
+
+                <th>Add</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr *ngFor="let item of filteredList">
+
+                <td><img class="product-img" src="{{imageUrl}}{{item.image}}" alt="failed" /></td>
+                <td>{{ item.name }}</td>
+                <td>{{ item.availableQty }}</td>
+                <td>₹{{ item.unitPrice }}</td>
+
+                <td>
+                    <!-- ADD BUTTON (if item NOT in cart) -->
+                    <button *ngIf="!isInCart(item)" class="btn btn-success btn-sm" (click)="addToCart(item)">
+                        Add
+                    </button>
+
+                    <div *ngIf="isInCart(item)" class="qty-control">
+
+                        <button class="btn btn-outline-secondary btn-sm" (click)="decreaseQty(getCartItem(item))">
+                            −
+                        </button>
+
+                        <span class="qty">
+                            {{ getCartItem(item).qty }}
+                        </span>
+
+                        <button class="btn btn-outline-secondary btn-sm" (click)="increaseQty(getCartItem(item))"
+                            [disabled]="getCartItem(item).qty === getCartItem(item).maxQty">
+                            +
+                        </button>
+
+                        <!-- REMOVE -->
+                        <button class="btn btn-outline-danger btn-sm" (click)="removeFromCart(getCartItem(item))">
+                            ✕
+                        </button>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <hr />
+
+    <!-- BILL SECTION -->
+    <h3>🧾 Bill</h3>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Item</th>
+                <th>Qty</th>
+                <th>unitPrice</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr *ngFor="let c of cart">
+                <td>{{ c.name }}</td>
+                <td>{{ c.qty }}</td>
+                <td>{{c.price}}</td>
+                <td>₹{{ c.total }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h4>Total: ₹{{ grandTotal }}</h4>
+
+    <button class="btn btn-primary" (click)="generateBill()">
+        Generate Bill
+    </button>
+
+</div>
