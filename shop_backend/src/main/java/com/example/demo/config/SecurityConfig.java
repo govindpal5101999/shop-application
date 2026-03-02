@@ -34,7 +34,7 @@ public class SecurityConfig {
                          .antMatchers("/api/admin/**").hasRole("ADMIN")
                          .anyRequest().authenticated()
                          .and()
-                         .formLogin().disable();
+                         .formLogin().disable()
                     )
                 .httpBasic();
 
