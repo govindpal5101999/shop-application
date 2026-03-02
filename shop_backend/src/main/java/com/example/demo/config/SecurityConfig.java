@@ -33,6 +33,8 @@ public class SecurityConfig {
                          .antMatchers("/api/online-order/**").hasRole("CUSTOMER")
                          .antMatchers("/api/admin/**").hasRole("ADMIN")
                          .anyRequest().authenticated()
+                         .and()
+                         .formLogin().disable();
                     )
                 .httpBasic();
 
