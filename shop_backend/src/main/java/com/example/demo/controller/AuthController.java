@@ -11,7 +11,7 @@ import com.example.demo.dto.LoginRequestDTO;
 import com.example.demo.dto.LoginResponseDTO;
 import org.springframework.http.HttpStatus;
 
-@CrossOrigin(origins = "*")
+
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
