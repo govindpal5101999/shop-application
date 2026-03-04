@@ -23,18 +23,6 @@
           </a>
         </li>
 
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/about">
-            <i class="bi bi-info-circle"></i> About
-          </a>
-        </li>
-
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/contactUs">
-            <i class="bi bi-envelope"></i> Contact
-          </a>
-        </li>
-
         <!-- ADMIN ONLY -->
         <ng-container *ngIf="auth.isAdmin()">
 
@@ -75,6 +63,19 @@
           </li>
 
         </ng-container>
+
+        <!-- PUBLIC LINKS -->
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/about">
+            <i class="bi bi-info-circle"></i> About
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/contactUs">
+            <i class="bi bi-envelope"></i> Contact
+          </a>
+        </li>
 
         <!-- NOT LOGGED IN -->
         <ng-container *ngIf="!auth.isLoggedIn()">

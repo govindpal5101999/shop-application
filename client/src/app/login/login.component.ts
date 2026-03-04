@@ -16,7 +16,6 @@ export class LoginComponent {
   login() {
     this.auth.login(this.username, this.password).subscribe({
       next: (res: any) => {
-        alert('Login successful!');
         if (res.role) {
           this.auth.setSession(this.username, res.role); // Store role in localStorage
           this.router.navigate(['/']);

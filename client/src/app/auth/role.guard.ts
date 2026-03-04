@@ -12,7 +12,7 @@ export class RoleGuard implements CanActivate {
 
     if (role === 'ADMIN') {
       return true;
-    } else if (role == "CUSTOMER") {
+    } else if (role == "USER") {
       return true
     }
 
