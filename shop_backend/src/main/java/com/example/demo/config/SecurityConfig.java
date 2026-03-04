@@ -29,7 +29,7 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                     .authorizeRequests(auth -> auth
                          .antMatchers("/auth/**").permitAll()
-                         .antMatchers("api/products/inventory/public").permitAll()
+                         .antMatchers("/api/products/inventory/public").permitAll()
                          .antMatchers("/api/online-order/**").hasRole("CUSTOMER")
                          .antMatchers("/api/admin/**").hasRole("ADMIN")
                          .anyRequest().authenticated()
