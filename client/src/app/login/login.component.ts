@@ -17,7 +17,8 @@ export class LoginComponent {
     this.auth.login(this.username, this.password).subscribe({
       next: (res: any) => {
         if (res.role) {
-          this.auth.setSession(this.username, res.role); // Store role in localStorage
+          const token = 'Basic ' + btoa(this.username + ':' + this.password);
+          this.auth.setSession(this.username, res.role, token); // Store role in localStorage
           this.router.navigate(['/']);
         } else {
           console.error('Role is undefined');

@@ -12,9 +12,10 @@ export class AuthService {
   constructor(private http: HttpClient) { }
 
   // 🔹 Save user session
-  setSession(username: string, role: string) {
+  setSession(username: string, role: string, token: any) {
     localStorage.setItem('username', username);
     localStorage.setItem('role', role);
+    localStorage.setItem('token', token);
   }
 
   // 🔹 Check login
