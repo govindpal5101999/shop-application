@@ -30,7 +30,7 @@ public class SecurityConfig {
                     .authorizeRequests(auth -> auth
                          .antMatchers("/auth/**").permitAll()
                          .antMatchers("/api/products/inventory/public").permitAll()
-                         .antMatchers("/api/online-order/**").hasRole("CUSTOMER")
+                         .antMatchers("/api/online-order/**").hasRole("USER")
                          .antMatchers("/api/admin/**").hasRole("ADMIN")
                          .anyRequest().authenticated()
                     )

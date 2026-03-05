@@ -35,7 +35,7 @@ public class AuthController {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
         if (user.getRole() == null) {
-            user.setRole(Role.CUSTOMER); // Default role if none provided
+            user.setRole(Role.USER); // Default role if none provided
         }
 
         // Save the new user
