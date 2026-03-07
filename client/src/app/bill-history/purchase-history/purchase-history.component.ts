@@ -21,7 +21,7 @@ export class PurchaseHistoryComponent implements OnInit {
           billNumber: bill.number,
           items: bill.items,
           grandTotal: bill.totalAmount,
-          date: bill.saleDate
+          date: bill.purchaseDate
         };
       });
     });

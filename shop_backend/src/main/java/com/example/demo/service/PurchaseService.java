@@ -133,9 +133,12 @@ public class PurchaseService {
 
         for (Purchase purchase : purchases) {
 
+            if (purchase.getPurchaseItems().isEmpty()) continue; 
+
             List<PurchaseResponseDTO.ItemDTO> items = new ArrayList<>();
 
             for (PurchaseItem item : purchase.getPurchaseItems()) {
+
                 items.add(new PurchaseResponseDTO.ItemDTO(
                         item.getName(),
                         item.getQuantity(),
