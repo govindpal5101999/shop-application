@@ -13,18 +13,32 @@
 .hero {
   text-align: center;
   margin-bottom: 50px;
+  background: linear-gradient(90deg, #ffd700, #ffffff);
 
   h1 {
-    font-size: 42px;
+    font-size: 24px;
     font-weight: 600;
     letter-spacing: 1px;
-    background: linear-gradient(90deg, #ffd700, #ffffff);
-    -webkit-text-fill-color: transparent;
+
+    color: black;
+    white-space: nowrap;
+    /* prevents line break */
+    animation: moveText 15s linear infinite;
   }
 
   p {
     color: #aaa;
     margin-top: 10px;
+  }
+}
+
+@keyframes moveText {
+  0% {
+    transform: translateX(60%);
+  }
+
+  100% {
+    transform: translateX(-60%);
   }
 }
 
