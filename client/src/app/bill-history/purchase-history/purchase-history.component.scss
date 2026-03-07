@@ -1,0 +1,47 @@
+.history-container {
+    max-width: 1000px;
+    margin: 50px auto;
+    padding: 30px;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+}
+
+.history-container h2 {
+    margin-bottom: 25px;
+    font-weight: 600;
+}
+
+.table th {
+    background-color: #f1f3f6;
+    font-weight: 600;
+}
+
+.table td {
+    vertical-align: middle;
+}
+
+.table tr:hover {
+    background-color: #f9f9f9;
+    transition: 0.2s ease;
+}
+
+@media print {
+    body * {
+        visibility: hidden;
+        /* Hide everything */
+    }
+
+    .print-section,
+    .print-section * {
+        visibility: visible;
+        /* Show only the selected bill */
+    }
+
+    .print-section {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+    }
+}

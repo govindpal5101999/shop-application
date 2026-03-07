@@ -19,6 +19,8 @@ import { SignupComponent } from './signup/signup.component';
 import { PurchaseComponent } from './purchase/purchase.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { MainComponent } from './main/main.component';
+import { SaleHistoryComponent } from './bill-history/sale-history/sale-history.component';
+import { PurchaseHistoryComponent } from './bill-history/purchase-history/purchase-history.component';
 
 const routes: Routes = [
   {
@@ -77,6 +79,14 @@ const routes: Routes = [
   },
   {
     path: 'bill-preview', component: BillPreviewComponent
+  },
+  {
+    path: 'sale-history', component: SaleHistoryComponent
+
+  },
+  {
+    path: 'purchase-history', component: PurchaseHistoryComponent
+
   },
 
 

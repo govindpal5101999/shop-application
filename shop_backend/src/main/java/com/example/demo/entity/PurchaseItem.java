@@ -1,109 +1,97 @@
 package com.example.demo.entity;
 
-
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Arrays;
+import javax.persistence.*;
 import java.util.Date;
-import java.util.List;
-
-import javax.persistence.Column;
-import javax.persistence.Convert;
-import javax.persistence.Embedded;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
-
-import org.hibernate.annotations.Type;
-
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonRawValue;
-
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-@Table(name="Purchase")
-
+@Table(name = "Purchase")
 public class PurchaseItem {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
-	
-	 @Column(name = "name", unique = true)
-	private String name;
-	
-	private Float unitprice;
-	
-	private Integer quantity;
-	
-	private Float totalamount;
-	
-	private Date date;
-	
-	@Column(name = "picByte", length = 1000)
-	private byte[] picByte;
 
-	// @ManyToOne
-    // @JoinColumn(name = "purchase_id")
-    // private Purchase purchase;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
 
-	public Integer getId() {
-		return id;
-	}
+    @Column(name = "name", unique = true)
+    private String name;
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
+    private Float unitprice;
 
-	public String getName() {
-		return name;
-	}
+    private Integer quantity;
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    private Float totalamount;
 
-	public Float getUnitprice() {
-		return unitprice;
-	}
+    private Date date;
 
-	public void setUnitprice(Float unitprice) {
-		this.unitprice = unitprice;
-	}
+    @Column(name = "picByte", length = 1000)
+    private byte[] picByte;
 
-	public Integer getQuantity() {
-		return quantity;
-	}
+    @ManyToOne
+    @JoinColumn(name = "purchase_id")
+	@JsonIgnore
+    private Purchase purchase;
 
-	public void setQuantity(Integer quantity) {
-		this.quantity = quantity;
-	}
+    public Integer getId() {
+        return id;
+    }
 
-	public Float getTotalamount() {
-		return totalamount;
-	}
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
-	public void setTotalamount(Float totalamount) {
-		this.totalamount = totalamount;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public Date getDate() {
-		return date;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public void setDate(Date date) {
-		this.date = date;
-	}
+    public Float getUnitprice() {
+        return unitprice;
+    }
 
+    public void setUnitprice(Float unitprice) {
+        this.unitprice = unitprice;
+    }
 
-	public byte[] getPicByte() {
-		return picByte;
-	}
+    public Integer getQuantity() {
+        return quantity;
+    }
 
-	public void setPicByte(byte[] picByte) {
-		this.picByte = picByte;
-	}	
-	
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
+    }
+
+    public Float getTotalamount() {
+        return totalamount;
+    }
+
+    public void setTotalamount(Float totalamount) {
+        this.totalamount = totalamount;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    public byte[] getPicByte() {
+        return picByte;
+    }
+
+    public void setPicByte(byte[] picByte) {
+        this.picByte = picByte;
+    }
+
+    public Purchase getPurchase() {
+        return purchase;
+    }
+
+    public void setPurchase(Purchase purchase) {
+        this.purchase = purchase;
+    }
 }

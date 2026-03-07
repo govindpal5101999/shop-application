@@ -17,6 +17,7 @@ export interface Bill {
 export class BillingService {
 
     public url = `${environment.apiUrl}/api/sales`;
+    public _url = `${environment.apiUrl}/api/products`;
 
     constructor(private httpClient: HttpClient) { }
 
@@ -26,5 +27,13 @@ export class BillingService {
 
     getBillHistory(): Observable<any[]> {
         return this.httpClient.get<any[]>(`${this.url}/bills`);
+    }
+
+    getPurchaseBillByNumber(billNumber: string): Observable<any> {
+        return this.httpClient.get<any>(`${this._url}/bills/${billNumber}`);
+    }
+
+    getPurchaseBillHistory(): Observable<any[]> {
+        return this.httpClient.get<any[]>(`${this._url}/bills`);
     }
 }

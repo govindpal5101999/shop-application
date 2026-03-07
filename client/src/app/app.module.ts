@@ -34,6 +34,8 @@ import { SignupComponent } from './signup/signup.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { PurchaseComponent } from './purchase/purchase.component';
 import { MainComponent } from './main/main.component';
+import { PurchaseHistoryComponent } from './bill-history/purchase-history/purchase-history.component';
+import { SaleHistoryComponent } from './bill-history/sale-history/sale-history.component';
 
 @NgModule({
   declarations: [
@@ -56,7 +58,9 @@ import { MainComponent } from './main/main.component';
     SignupComponent,
     DashboardComponent,
     PurchaseComponent,
-    MainComponent
+    MainComponent,
+    PurchaseHistoryComponent,
+    SaleHistoryComponent
   ],
   imports: [
     BrowserModule,

@@ -1,47 +1,11 @@
-<div class="history-container">
-
-    <h2>Sale Bill History</h2>
-
-    <table class="table table-bordered">
-        <thead>
-            <tr>
-                <th>Bill No</th>
-                <th>Date</th>
-                <th>Total</th>
-                <th>Items</th>
-                <th>Action</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let bill of bills">
-                <td>{{ bill.billNumber }}</td>
-                <td>{{ bill.date | date:'short' }}</td>
-                <td>₹{{ bill.grandTotal }}</td>
-                <td>
-                    <table class="table table-sm table-striped mb-0">
-                        <thead>
-                            <tr>
-                                <th>Item Name</th>
-                                <th>Quantity</th>
-                                <th>Price</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr *ngFor="let item of bill.items">
-                                <td>{{ item.name }}</td>
-                                <td>{{ item.quantity }}</td>
-                                <td>₹{{ item.price }}</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </td>
-                <td>
-                    <button class="btn btn-primary btn-sm" (click)="printBill(bill.billNumber)">
-                        Print
-                    </button>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-
+<div class="bill-history-card">
+    <h2 class="title">Bill History</h2>
+    <div class="buttons-container">
+        <button class="btn purchase-btn" (click)="onPurchaseHistory()">
+            Purchase Bill History
+        </button>
+        <button class="btn sale-btn" (click)="onSaleHistory()">
+            Sale Bill History
+        </button>
+    </div>
 </div>
