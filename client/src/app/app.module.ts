@@ -33,6 +33,7 @@ import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { PurchaseComponent } from './purchase/purchase.component';
+import { MainComponent } from './main/main.component';
 
 @NgModule({
   declarations: [
@@ -54,7 +55,8 @@ import { PurchaseComponent } from './purchase/purchase.component';
     LoginComponent,
     SignupComponent,
     DashboardComponent,
-    PurchaseComponent
+    PurchaseComponent,
+    MainComponent
   ],
   imports: [
     BrowserModule,

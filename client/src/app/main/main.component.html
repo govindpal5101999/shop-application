@@ -1,0 +1,97 @@
+<div class="main">
+
+    <!-- FLOATING NAVBAR -->
+
+    <div class="navbar">
+
+        <div class="logo">
+            Crochet Store
+        </div>
+
+        <div class="nav-icons">
+
+            <span class="material-icons">
+                search
+            </span>
+
+            <span class="material-icons cart">
+                shopping_cart
+            </span>
+
+        </div>
+
+    </div>
+
+
+    <!-- HERO -->
+
+    <section class="hero">
+
+        <div class="hero-text">
+
+            <h1>Handmade Crochet Collection</h1>
+
+            <p>Luxury Handmade Gifts Crafted With Love</p>
+
+            <button>Explore Store</button>
+
+        </div>
+
+    </section>
+
+
+    <!-- PRODUCTS -->
+
+    <section class="products">
+
+        <h2>All Products</h2>
+
+        <div class="grid">
+
+            <div class="card" *ngFor="let p of visibleProducts">
+
+                <img [src]="imageUrl + p.image" [alt]="p.name" />
+
+                <div class="info">
+
+                    <h3>{{p.name}}</h3>
+
+                    <p class="price">₹{{p.unitPrice}}</p>
+
+                    <button>Shoap Now</button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="load-more">
+            <button (click)="loadMore()">Load More</button>
+        </div>
+
+    </section>
+
+
+    <!-- TESTIMONIAL -->
+
+    <section class="testimonial">
+
+        <h2>Loved By Our Customers</h2>
+
+        <p>
+            “I bought crochet flowers for my fiancée and she loved them.”
+        </p>
+
+    </section>
+
+    <!-- BACK TO TOP -->
+
+    <button class="top" *ngIf="showTop" (click)="top()">
+
+        ↑top
+
+    </button>
+
+</div>

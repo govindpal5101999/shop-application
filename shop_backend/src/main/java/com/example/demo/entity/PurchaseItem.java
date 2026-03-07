@@ -45,6 +45,10 @@ public class PurchaseItem {
 	@Column(name = "picByte", length = 1000)
 	private byte[] picByte;
 
+	// @ManyToOne
+    // @JoinColumn(name = "purchase_id")
+    // private Purchase purchase;
+
 	public Integer getId() {
 		return id;
 	}

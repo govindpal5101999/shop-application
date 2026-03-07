@@ -66,6 +66,7 @@
 .login-btn:hover {
     background: rgba(0, 245, 160, 0.15);
     transform: translateY(-2px);
+    cursor: pointer;
 }
 
 /* ================= SIGNUP BUTTON */
@@ -91,6 +92,7 @@
 
 .logout-btn:hover {
     color: #ff1a1a !important;
+    cursor: pointer;
 }
 
 /* ================= TOGGLER */

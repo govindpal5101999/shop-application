@@ -31,77 +31,121 @@ public class SaleService {
     @Autowired
     private PurchaseItemRepository purchaseItemRepository;
 
+    public List<Sale> getAllSales() {
+    return saleRepository.findAll();
+    }
+
+    public List<SaleResponseDTO> getAllSalesDTO() {
+        List<Sale> sales = saleRepository.findAll();
+        List<SaleResponseDTO> saleDTOs = new ArrayList<>();
+    
+for (Sale sale : sales) {
+    if (sale.getSaleItems().isEmpty()) continue; // skip sales with no items
+
+    List<SaleResponseDTO.ItemDTO> items = new ArrayList<>();
+    for (SaleItem item : sale.getSaleItems()) {
+        items.add(new SaleResponseDTO.ItemDTO(
+            item.getItemName(),
+            item.getQuantity(),
+            item.getPrice()
+        ));
+    }
+    saleDTOs.add(new SaleResponseDTO(
+            sale.getBillNumber(),
+            sale.getSaleDate(),
+            sale.getTotalAmount(), 
+            items
+            ));
+}
+    
+        return saleDTOs;
+    }
+
+    public SaleResponseDTO getSaleByBillNumber(String billNumber) {
+        Sale sale = saleRepository.findByBillNumber(billNumber);
+
+        if (sale == null) {
+        return null; // Controller can handle the 404
+        }
+
+        List<SaleResponseDTO.ItemDTO> items = new ArrayList<>();
+        for (SaleItem item : sale.getSaleItems()) {
+        items.add(new SaleResponseDTO.ItemDTO(
+            item.getItemName(),
+            item.getQuantity(),
+            item.getPrice()
+        ));
+        }
+
+        return new SaleResponseDTO(
+            sale.getBillNumber(),
+            sale.getSaleDate(),      
+            sale.getTotalAmount(),  
+            items
+            );
+    }
+
     public String generateBillNumber() {
         return "BILL" + System.currentTimeMillis();
     }
 
     public SaleResponseDTO createSale(List<SaleRequestDTO> sales) {
 
-        String billNumber = generateBillNumber();
+    String billNumber = generateBillNumber();
 
-        Sale sale = new Sale();
-        sale.setBillNumber(billNumber);
-        sale.setSaleDate(new Timestamp(System.currentTimeMillis()));
+    // Create sale and set timestamp manually
+    Sale sale = new Sale();
+    sale.setBillNumber(billNumber);
+    sale.setTotalAmount(BigDecimal.ZERO);
+    sale.setSaleDate(new Timestamp(System.currentTimeMillis()));
+    List<SaleItem> saleItems = new ArrayList<>();
+    BigDecimal totalAmount = BigDecimal.ZERO;
 
-        BigDecimal totalAmount = BigDecimal.ZERO;
-        List<SaleItem> saleItems = new ArrayList<>();
+    // Load inventory once
+    List<InventoryView> inventoryList = purchaseItemRepository.getInventorySummary();
 
-        // 🔐 Load inventory once
-        List<InventoryView> inventoryList =
-                purchaseItemRepository.getInventorySummary();
+    for (SaleRequestDTO saleDTO : sales) {
+        InventoryView inventory = inventoryList.stream()
+            .filter(i -> i.getName().equals(saleDTO.getName()))
+            .findFirst()
+            .orElseThrow(() -> new RuntimeException("Product not found: " + saleDTO.getName()));
 
-        for (SaleRequestDTO saleDTO : sales) {
-
-            InventoryView inventory = inventoryList.stream()
-                    .filter(i -> i.getName().equals(saleDTO.getName()))
-                    .findFirst()
-                    .orElseThrow(() ->
-                        new RuntimeException("Product not found: " + saleDTO.getName())
-                    );
-
-            // ✅ STOCK VALIDATION (CORRECT)
-            if (saleDTO.getQuantity() > inventory.getAvailableQty()) {
-                throw new RuntimeException(
-                        "Insufficient stock for " + saleDTO.getName()
-                        + ". Available: " + inventory.getAvailableQty()
-                );
-            }
-
-            BigDecimal lineTotal =
-                    BigDecimal.valueOf(saleDTO.getUnitPrice())
-                              .multiply(BigDecimal.valueOf(saleDTO.getQuantity()));
-
-            totalAmount = totalAmount.add(lineTotal);
-
-            SaleItem saleItem = new SaleItem();
-            saleItem.setItemName(saleDTO.getName());
-            saleItem.setQuantity(saleDTO.getQuantity());
-            saleItem.setPrice(lineTotal);
-
-            saleItems.add(saleItem);
-        }
-
-        sale.setTotalAmount(totalAmount);
-        sale = saleRepository.save(sale);
-
-        for (SaleItem item : saleItems) {
-            item.setSale(sale);
-            saleItemRepository.save(item);
-        }
-
-        List<SaleResponseDTO.ItemDTO> itemDTOs = new ArrayList<>();
-        for (SaleItem item : saleItems) {
-            itemDTOs.add(
-                new SaleResponseDTO.ItemDTO(
-                    item.getItemName(),
-                    item.getQuantity(),
-                    item.getPrice()
-                )
+        if (saleDTO.getQuantity() > inventory.getAvailableQty()) {
+            throw new RuntimeException(
+                "Insufficient stock for " + saleDTO.getName()
+                + ". Available: " + inventory.getAvailableQty()
             );
         }
 
-        return new SaleResponseDTO(billNumber, itemDTOs);
+        BigDecimal lineTotal = BigDecimal.valueOf(saleDTO.getUnitPrice())
+                                     .multiply(BigDecimal.valueOf(saleDTO.getQuantity()));
+        totalAmount = totalAmount.add(lineTotal);
+
+        SaleItem saleItem = new SaleItem();
+        saleItem.setItemName(saleDTO.getName());
+        saleItem.setQuantity(saleDTO.getQuantity());
+        saleItem.setPrice(lineTotal);
+        saleItem.setSale(sale); // link to parent
+
+        saleItems.add(saleItem);
     }
+
+    sale.setTotalAmount(totalAmount);
+    sale.setSaleItems(saleItems);
+
+    // Save sale + items in one shot using cascade
+    sale = saleRepository.save(sale); // Do NOT save SaleItems individually
+
+    // Prepare response DTO
+    List<SaleResponseDTO.ItemDTO> itemDTOs = saleItems.stream()
+        .map(item -> new SaleResponseDTO.ItemDTO(item.getItemName(), item.getQuantity(), item.getPrice()))
+        .toList();
+
+    return new SaleResponseDTO(billNumber,
+        sale.getSaleDate(),       
+        sale.getTotalAmount(),  
+        itemDTOs);
+}
 
     public List<TopSellingView> getTop5SellingProducts() {
     return saleItemRepository.getTop5SellingProducts();

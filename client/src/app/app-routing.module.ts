@@ -18,6 +18,7 @@ import { RoleGuard } from './auth/role.guard';
 import { SignupComponent } from './signup/signup.component';
 import { PurchaseComponent } from './purchase/purchase.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { MainComponent } from './main/main.component';
 
 const routes: Routes = [
   {
@@ -37,6 +38,9 @@ const routes: Routes = [
     path: "contactUs", component: ContactUsComponent
   },
 
+  {
+    path: "main", component: MainComponent
+  },
   //USER
   {
     path: 'purchase', component: PurchaseComponent

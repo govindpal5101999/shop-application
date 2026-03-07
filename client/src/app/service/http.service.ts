@@ -67,7 +67,7 @@ export class PostService {
   }
 
   generateBill(data: any[]) {
-    return this.httpClient.post(`${this._url}/sales`, data);
+    return this.httpClient.post(`${this.url}`, data);
   }
 
   getAllPublicProducts(): Observable<Product[]> {

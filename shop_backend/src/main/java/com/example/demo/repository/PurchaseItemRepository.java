@@ -24,18 +24,34 @@ public interface PurchaseItemRepository extends JpaRepository<PurchaseItem, Inte
 
     PurchaseItem findByNameIgnoreCase(String name);
 
-@Query(value = """
+    // Purchase findByBillNumber(String billNumber);
+
+    @Query(value = """
     SELECT 
         p.id AS id,
         p.name AS name,
-        SUM(p.quantity) AS purchasedQty,
-        COALESCE(SUM(s.quantity), 0) AS soldQty,
-        (SUM(p.quantity) - COALESCE(SUM(s.quantity), 0)) AS availableQty,
-        MAX(p.unitprice) AS unitPrice,
-        MAX(replace(encode(p.pic_byte, 'base64'), E'\n', '')) AS image
-    FROM Purchase  p
-    LEFT JOIN Sale s ON s.item_name = p.name
-    GROUP BY p.id, p.name
+        p.total_purchased AS purchasedQty,
+        COALESCE(s.total_sold, 0) AS soldQty,
+        (p.total_purchased - COALESCE(s.total_sold, 0)) AS availableQty,
+        p.unitPrice AS unitPrice,
+        p.image AS image
+    FROM (
+        SELECT 
+            MIN(id) AS id,
+            name,
+            SUM(quantity) AS total_purchased,
+            MAX(unitprice) AS unitPrice,
+            MAX(replace(encode(pic_byte, 'base64'), E'\\n', '')) AS image
+        FROM Purchase
+        GROUP BY name
+    ) p
+    LEFT JOIN (
+        SELECT 
+            item_name,
+            SUM(quantity) AS total_sold
+        FROM sale_item
+        GROUP BY item_name
+    ) s ON s.item_name = p.name
 """, nativeQuery = true)
 List<InventoryView> getInventorySummary();
 
@@ -43,12 +59,26 @@ List<InventoryView> getInventorySummary();
     SELECT 
         p.id AS id,
         p.name AS name,
-        (SUM(p.quantity) - COALESCE(SUM(s.quantity), 0)) AS availableQty,
-        MAX(p.unitprice) AS unitPrice,
-        MAX(replace(encode(p.pic_byte, 'base64'), E'\n', '')) AS image
-    FROM Purchase p
-    LEFT JOIN Sale s ON s.item_name = p.name
-    GROUP BY p.id, p.name
+        (p.total_purchased - COALESCE(s.total_sold, 0)) AS availableQty,
+        p.unitPrice AS unitPrice,
+        p.image AS image
+    FROM (
+        SELECT 
+            MIN(id) AS id,
+            name,
+            SUM(quantity) AS total_purchased,
+            MAX(unitprice) AS unitPrice,
+            MAX(replace(encode(pic_byte, 'base64'), E'\\n', '')) AS image
+        FROM Purchase
+        GROUP BY name
+    ) p
+    LEFT JOIN (
+        SELECT 
+            item_name,
+            SUM(quantity) AS total_sold
+        FROM sale_item
+        GROUP BY item_name
+    ) s ON s.item_name = p.name
 """, nativeQuery = true)
 List<PublicProductView> getPublicProducts();
 

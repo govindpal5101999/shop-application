@@ -5,6 +5,7 @@ import com.example.demo.dto.SaleResponseDTO;
 import com.example.demo.projection.TopSellingView;
 import com.example.demo.service.SaleService;
 import com.example.demo.repository.SaleItemRepository;
+import com.example.demo.repository.SaleRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -20,8 +21,22 @@ public class SaleController {
     @Autowired
     private SaleService saleService;
 
-    @PostMapping
-    public ResponseEntity<SaleResponseDTO> createSale(
+    @GetMapping("/bills")
+    public ResponseEntity<List<SaleResponseDTO>> getAllBills() {
+        List<SaleResponseDTO> sales = saleService.getAllSalesDTO();
+        return ResponseEntity.ok(sales);
+    }
+
+    @GetMapping("/bills/{billNumber}")
+    public ResponseEntity<SaleResponseDTO> getBillByNumber(@PathVariable String billNumber) {
+    SaleResponseDTO response = saleService.getSaleByBillNumber(billNumber);
+        if (response == null) {
+        return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(response);
+    }
+
+    @PostMapping public ResponseEntity<SaleResponseDTO> createSale(
             @RequestBody List<SaleRequestDTO> sales) {
 
         SaleResponseDTO response = saleService.createSale(sales);

@@ -32,6 +32,7 @@ public class SecurityConfig {
                          .antMatchers("/api/products/inventory/public").permitAll()
                          .antMatchers("/api/online-order/**").hasRole("USER")
                          .antMatchers("/api/admin/**").hasRole("ADMIN")
+                         .antMatchers("/api/sales/**").hasRole("ADMIN")
                          .anyRequest().authenticated()
                     )
                 .httpBasic();

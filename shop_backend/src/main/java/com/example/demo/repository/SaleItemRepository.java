@@ -20,7 +20,7 @@ public interface SaleItemRepository extends JpaRepository<SaleItem, Long> {
             SUM(s.quantity) AS totalSold,
             MAX(replace(encode(p.pic_byte, 'base64'), E'\n', '')) AS image,
             MAX(s.price) AS price
-        FROM Sale s
+        FROM sale_item s
         JOIN Purchase p ON p.name = s.item_name
         GROUP BY s.item_name
         ORDER BY totalSold DESC

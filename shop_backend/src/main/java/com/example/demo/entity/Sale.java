@@ -1,14 +1,14 @@
 package com.example.demo.entity;
 
-import com.example.demo.entity.Sale;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.List;
+import org.hibernate.annotations.CreationTimestamp;
 
 @Entity
-@Table(name="Salebill")
+@Table(name="Sale_bill")
 public class Sale {
 
     @Id
@@ -16,11 +16,23 @@ public class Sale {
     private Long id;
 
     private String billNumber;
+    @CreationTimestamp
+    @Column(name = "sale_date", nullable = false, updatable = false)
     private Timestamp saleDate;
     private BigDecimal totalAmount;
 
     @OneToMany(mappedBy = "sale", cascade = CascadeType.ALL)
     private List<SaleItem> saleItems;
+
+
+    public Sale() {}
+
+    @PrePersist
+    protected void onCreate() {
+        if (saleDate == null) {
+            saleDate = new Timestamp(System.currentTimeMillis());
+        }
+    }
 
     // Getters and setters
     public Long getId() { return id; }
@@ -30,7 +42,9 @@ public class Sale {
     public void setBillNumber(String billNumber) { this.billNumber = billNumber; }
 
     public Timestamp getSaleDate() { return saleDate; }
-    public void setSaleDate(Timestamp saleDate) { this.saleDate = saleDate; }
+    public void setSaleDate(Timestamp saleDate) {
+    this.saleDate = saleDate;
+}
 
     public BigDecimal getTotalAmount() { return totalAmount; }
     public void setTotalAmount(BigDecimal totalAmount) { this.totalAmount = totalAmount; }

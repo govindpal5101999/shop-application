@@ -1,18 +1,25 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { PostService } from '../service/http.service';
 import { Product } from '../models/Product.model';
 import { CartService } from '../service/cart.service';
-import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss']
+  selector: 'app-main',
+  templateUrl: './main.component.html',
+  styleUrls: ['./main.component.scss']
 })
-export class HomeComponent implements OnInit {
+export class MainComponent implements OnInit {
 
   products: Product[] = [];
+  visibleProducts: Product[] = [];
+
+  loading = true;
+
   imageUrl = 'data:image/jpeg;base64,';
+
+  // SEARCH + FILTER
+  searchText: string = '';
+  selectedCategory: string = '';
 
   categories: string[] = [
     'Pens',
@@ -22,38 +29,54 @@ export class HomeComponent implements OnInit {
     'Office Items'
   ];
 
-  searchText: string = '';
-  selectedCategory: string = '';
+  // Quick view
+  selectedProduct: Product | null = null;
 
-  constructor(private productService: PostService, public cartService: CartService) { }
+  // Lazy loading
+  pageSize = 8;
+  index = 0;
+
+  showTop = false;
+
+  constructor(
+    private productService: PostService,
+    public cartService: CartService
+  ) { }
 
   ngOnInit(): void {
     this.loadProducts();
   }
 
   loadProducts(): void {
+
     this.productService.getAllPublicProducts().subscribe({
       next: (data: Product[]) => {
 
-        // Assign temporary unique id if backend not sending one
         this.products = data.map((p, index) => ({
           ...p,
           id: p.id ?? index
         }));
 
+        this.resetProducts();
+        this.loading = false;
       },
       error: (err) => {
         console.error('Error fetching products', err);
+        this.loading = false;
       }
     });
+
   }
 
-  // Filter logic
+  // ================= FILTER =================
+
   filteredProducts(): Product[] {
+
     return this.products.filter(product => {
 
       const matchesSearch =
-        product.name.toLowerCase().includes(this.searchText.toLowerCase());
+        product.name.toLowerCase()
+          .includes(this.searchText.toLowerCase());
 
       const matchesCategory =
         this.selectedCategory
@@ -61,7 +84,9 @@ export class HomeComponent implements OnInit {
           : true;
 
       return matchesSearch && matchesCategory;
+
     });
+
   }
 
   getCategory(product: Product): string {
@@ -74,10 +99,70 @@ export class HomeComponent implements OnInit {
     if (name.includes('color') || name.includes('brush')) return 'Art Supplies';
 
     return 'Office Items';
+
   }
 
+  // ================= RESET PRODUCTS =================
 
-  // ===== CART LOGIC =====
+  resetProducts() {
+
+    this.index = 0;
+    this.visibleProducts = [];
+
+    this.loadMore();
+
+  }
+
+  // ================= LAZY LOAD =================
+
+  loadMore() {
+
+    const filtered = this.filteredProducts();
+
+    if (this.index >= filtered.length) return;
+
+    const next = filtered.slice(this.index, this.index + this.pageSize);
+
+    this.visibleProducts = [
+      ...this.visibleProducts,
+      ...next
+    ];
+
+    this.index += this.pageSize;
+
+  }
+
+  // ================= SCROLL =================
+
+  @HostListener('window:scroll', [])
+  scroll() {
+
+    const pos = window.scrollY;
+    const height = document.body.scrollHeight - window.innerHeight;
+
+    this.showTop = pos > 600;
+
+    if (pos > height - 300) {
+      this.loadMore();
+    }
+
+  }
+
+  top() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  // ================= QUICK VIEW =================
+
+  quickView(product: Product) {
+    this.selectedProduct = product;
+  }
+
+  closePopup() {
+    this.selectedProduct = null;
+  }
+
+  // ================= CART =================
 
   addToCart(product: Product) {
     this.cartService.add(product);
