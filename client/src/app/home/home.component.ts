@@ -3,6 +3,7 @@ import { PostService } from '../service/http.service';
 import { Product } from '../models/Product.model';
 import { CartService } from '../service/cart.service';
 import { Router } from '@angular/router';
+import { AuthService } from '../service/auth.service';
 
 @Component({
   selector: 'app-home',
@@ -25,7 +26,7 @@ export class HomeComponent implements OnInit {
   searchText: string = '';
   selectedCategory: string = '';
 
-  constructor(private productService: PostService, public cartService: CartService) { }
+  constructor(private productService: PostService, public cartService: CartService, private auth: AuthService, private router: Router) { }
 
   ngOnInit(): void {
     this.loadProducts();
@@ -80,6 +81,13 @@ export class HomeComponent implements OnInit {
   // ===== CART LOGIC =====
 
   addToCart(product: Product) {
+    if (!this.auth.isLoggedIn()) {
+      alert("Please login to add items to cart");
+      this.router.navigate(['/login']);
+      return;
+    }
+
+    // If logged in -> add to cart
     this.cartService.add(product);
   }
 

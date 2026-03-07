@@ -75,7 +75,7 @@ export class CartService {
     return this.cart.reduce((sum, c) => sum + c.total, 0);
   }
 
-  clear() {
+  clearCart() {
     this.cart = [];
   }
 }

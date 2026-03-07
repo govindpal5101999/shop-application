@@ -26,6 +26,6 @@ export class PurchaseComponent {
 
   placeOrder() {
     alert('Order placed successfully!');
-    this.cartService.clear();
+    this.cartService.clearCart();
   }
 }

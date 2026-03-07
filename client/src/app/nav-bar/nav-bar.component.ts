@@ -18,6 +18,7 @@ export class NavBarComponent {
 
     localStorage.removeItem('token');
     localStorage.removeItem('role');
+    this.cartService.clearCart();
   }
 
   goToCart() {
